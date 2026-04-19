@@ -633,10 +633,10 @@
         };
 
         // --- BUDGET FUNCTIONS ---
-        const togglePayer = (index) => { haptic('light'); budgetLedger[index].paidBy = (budgetLedger[index].paidBy === 'Joe' ? 'Sonia' : 'Joe'); saveBudgetState(); renderBudget(); };
-        const updateAmount = (index, val) => { budgetLedger[index].amount = parseFloat(val) || 0; saveBudgetState(); updateBudgetTotals(); };
+        const togglePayer = (index) => { haptic('light'); budgetLedger[index].paidBy = (budgetLedger[index].paidBy === 'Joe' ? 'Sonia' : 'Joe'); saveBudgetState(); updateBudgetTotals(); renderBudget(); };
+        const updateAmount = (index, val) => { budgetLedger[index].amount = parseFloat(val) || 0; saveBudgetState(); updateBudgetTotals(); renderBudget(); };
         const toggleCategory = (cat) => { haptic('light'); if (expandedCategories.has(cat)) expandedCategories.delete(cat); else expandedCategories.add(cat); renderBudget(); };
-        const deleteBudgetItem = (index) => { haptic('light'); budgetLedger.splice(index, 1); saveBudgetState(); renderBudget(); }
+        const deleteBudgetItem = (index) => { haptic('light'); budgetLedger.splice(index, 1); saveBudgetState(); updateBudgetTotals(); renderBudget(); };
 
         const updateBudgetTotals = () => {
             let totalUSD = 0, joeUSD = 0, soniaUSD = 0;
