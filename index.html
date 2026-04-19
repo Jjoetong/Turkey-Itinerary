@@ -124,7 +124,7 @@
                 <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">Strategy</h1>
                 <p class="text-textMuted text-sm mb-6 italic">15-Day Luxury Circuit: Istanbul, Cappadocia, Bodrum</p>
                 
-                <!-- UPGRADE 1: Mission Control (Clocks & Countdown) -->
+                <!-- Mission Control -->
                 <div class="bg-card p-6 rounded-[2rem] border border-white/5 shadow-xl mb-4 relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="globe" class="w-32 h-32 text-white"></i></div>
                     <h2 class="text-sm font-bold text-textMuted uppercase tracking-widest mb-4">Mission Control</h2>
@@ -140,7 +140,7 @@
                     </div>
                     <div class="bg-accent/10 rounded-xl p-4 border border-accent/20 flex items-center justify-between shadow-lg">
                         <div>
-                            <p class="text-[10px] text-accent font-bold uppercase tracking-widest">Departure (Sep 14, 2026)</p>
+                            <p class="text-[10px] text-accent font-bold uppercase tracking-widest">Trip Starts (Sep 5, 2026)</p>
                             <p class="text-2xl font-bold text-white mt-0.5 tracking-tight" id="countdown-timer">00d 00h 00m</p>
                         </div>
                         <div class="bg-accent/20 p-2.5 rounded-full"><i data-lucide="plane-takeoff" class="w-5 h-5 text-accent"></i></div>
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <!-- UPGRADE 2: VIP Concierge (Phrases) -->
+                <!-- VIP Concierge -->
                 <div class="bg-card p-6 rounded-[2rem] border border-white/5 shadow-xl mt-4">
                     <i data-lucide="message-square" class="w-6 h-6 text-accent mb-4"></i>
                     <h2 class="text-lg font-bold text-white mb-4 tracking-tight">VIP Concierge</h2>
@@ -242,7 +242,7 @@
         <div id="view-weather" class="tab-content view-wrapper">
             <div class="pt-6 pb-2 px-5 w-full bg-dark border-b border-white/5 flex-shrink-0">
                 <h1 class="text-3xl font-bold text-white tracking-tight">Forecast</h1>
-                <p class="text-accent text-[10px] font-bold uppercase tracking-widest mt-1">Sep 14 - Sep 28</p>
+                <p class="text-accent text-[10px] font-bold uppercase tracking-widest mt-1">Sep 5 - Sep 19</p>
             </div>
             <div id="weather-deck-container" class="scroll-deck no-scrollbar"></div>
         </div>
@@ -322,204 +322,234 @@
             const loc = location.toLowerCase();
             const act = activity.toLowerCase();
             let img = defaultFallback;
-            if (act.includes('transit') || act.includes('departure') || act.includes('flight')) img = "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80";
-            else if (act.includes('breakfast') || act.includes('hotel') || act.includes('rest') || act.includes('check-in') || loc.includes('suite')) img = "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80";
-            else if (act.includes('lunch') || act.includes('dinner')) img = "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80";
-            else if (loc.includes('bazaar') || loc.includes('market') || act.includes('shopping')) img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80";
-            else if (loc.includes('palace') || loc.includes('hagia') || loc.includes('basilica') || loc.includes('castle')) img = "https://images.unsplash.com/photo-1541432900884-3418e35bf5e4?auto=format&fit=crop&w=800&q=80";
-            else if (loc.includes('balloon') || loc.includes('cappadocia') || loc.includes('valley')) img = "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80";
-            else if (loc.includes('beach') || loc.includes('yacht') || loc.includes('bodrum') || loc.includes('marina') || loc.includes('cruise')) img = "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80";
-            else if (loc.includes('cafe')) img = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80";
-            else if (act.includes('historic')) img = "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80";
+            if (act.includes('transit') || act.includes('departure') || act.includes('flight') || loc.includes('airport')) img = "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('breakfast') || act.includes('hotel') || act.includes('rest') || act.includes('check-in') || loc.includes('suite') || loc.includes('grounds')) img = "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('lunch') || act.includes('dinner') || act.includes('dessert') || loc.includes('kebab') || loc.includes('lokanta')) img = "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('bazaar') || loc.includes('market') || act.includes('shopping') || loc.includes('zorlu') || loc.includes('istinye') || loc.includes('galataport') || loc.includes('kanyon')) img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('palace') || loc.includes('hagia') || loc.includes('basilica') || loc.includes('castle') || loc.includes('museum') || loc.includes('topkapi')) img = "https://images.unsplash.com/photo-1541432900884-3418e35bf5e4?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('balloon') || loc.includes('cappadocia') || loc.includes('valley') || loc.includes('derinkuyu') || loc.includes('cavusin')) img = "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('beach') || loc.includes('yacht') || loc.includes('bodrum') || loc.includes('marina') || loc.includes('cruise') || loc.includes('gulet')) img = "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('cafe') || loc.includes('coffee') || loc.includes('mandabatmaz')) img = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('historic') || act.includes('iconic')) img = "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('nightlife') || act.includes('cocktails') || loc.includes('bar') || loc.includes('sortie')) img = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80";
             
             return { start, end, duration, location, city, zone, activity, desc, travelMethod, travelDist, travelTime, isMichelin, img, lat, lng, completed: false };
         };
 
-        // Complete Itinerary as requested
+        // Fully transcribed itinerary from the Master Document
         const itinerary = [
             { day: 1, city: "Istanbul", zone: "Arrival & Beşiktaş", stops: [
-                createStop("14:40", "15:40", "1 hr", "Istanbul Airport (IST)", "Istanbul", "Airport", "Arrival", "Arrival, VIP Fast Track. Emirates EK788.", "Walk", "-", "-", 41.260, 28.740),
-                createStop("15:40", "16:40", "1 hr", "Private VIP Mercedes Maybach Transfer", "Istanbul", "Transit", "Transit", "The VIP Fast Track service ensures immediate customs clearance. Baggage is handled exclusively by concierges.", "Car", "40 km", "1 hr", 41.150, 28.870),
-                createStop("16:40", "17:30", "50 min", "Çırağan Palace Kempinski", "Istanbul", "Beşiktaş", "Check-in", "Check-in at the only Ottoman imperial palace hotel on the Bosphorus. Palace Bosphorus Suite.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("17:30", "19:30", "2 hrs", "Hotel Rest", "Istanbul", "Beşiktaş", "Rest", "Allocated rest period to recover from travel fatigue. Unpack, refresh, appreciate sunset views.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("19:30", "21:30", "2 hrs", "Tuğra Restaurant", "Istanbul", "Beşiktaş", "Dinner", "First-night dinner is kept logistically simple. Michelin-recommended Ottoman imperial cuisine.", "Walk", "5 min", "5 min", 41.043, 29.016, true),
-                createStop("21:30", "21:45", "15 min", "Return to Suite", "Istanbul", "Beşiktaş", "Rest", "Retire to the Palace Bosphorus Suite for the night.", "Walk", "0 km", "5 min", 41.043, 29.016)
+                createStop("12:30", "13:30", "1h 00m", "Istanbul Airport (IST)", "Istanbul", "Beşiktaş", "✈️ Arrival", "International Arrival — Emirates First Class (via Dubai). Arrive refreshed from First Class; Emirates Al Maha lounge in Dubai on the way over; VIP meet & greet pre-arranged via hotel concierge.", "Flight", "-", "-", 41.260, 28.740),
+                createStop("13:30", "14:30", "1h 00m", "Çırağan Palace Kempinski — Check-In", "Istanbul", "Beşiktaş", "🏨 Hotel", "The only Ottoman imperial palace hotel in Istanbul; take the first 30 min to absorb the palace, the view, the grounds. Confirm Bosphorus-facing suite.", "Private Car", "40 km", "50-60m", 41.043, 29.016),
+                createStop("14:30", "16:00", "1h 30m", "Hotel Room — Unpack, Freshen Up", "Istanbul", "Beşiktaş", "🛏️ Rest", "Open the curtains; first Bosphorus view from the window; unpack properly; this is a travel-day recovery hour, not wasted time.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("16:00", "17:15", "1h 15m", "Çırağan Palace Grounds Walk", "Istanbul", "Beşiktaş", "🏰 Walk", "Explore the palace facade, the ornate waterfront gates, the waterfront pool terrace directly on the Bosphorus; a gentle first immersion.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("17:15", "18:30", "1h 15m", "Dolmabahçe Clock Tower + Stroll", "Istanbul", "Beşiktaş", "📸 View", "Gentle first stroll toward the Dolmabahçe Palace gates; the clock tower is photogenic; watch fishing boats crossing between continents.", "Walk", "1 km", "15m", 41.037, 28.995),
+                createStop("19:00", "21:30", "2h 30m", "Feriye Lokantası — Welcome Dinner", "Istanbul", "Beşiktaş", "🍽️ Dinner", "Restored Ottoman waterfront pavilion adjacent to Çırağan; Bosphorus-view terrace; begin with rakı and cold meze — the ritual welcome to Turkey.", "Walk/Taxi", "1.5 km", "10m", 41.046, 29.022)
             ]},
             { day: 2, city: "Istanbul", zone: "Historic Peninsula", stops: [
-                createStop("07:30", "08:30", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "A lavish traditional Turkish Kahvaltı featuring kaymak, honeycomb, and fresh cheeses.", "Walk", "5 min", "5 min", 41.043, 29.016),
-                createStop("08:30", "08:43", "13 min", "Transit to Old City", "Istanbul", "Transit", "Transit", "Departure timed to precede heavy traffic and tour group arrivals. Follows the waterfront.", "Taxi", "6 km", "13 min", 41.020, 28.995),
-                createStop("08:43", "09:30", "47 min", "Hagia Sophia Mosque", "Istanbul", "Sultanahmet", "Historic", "Accessing the 6th-century Byzantine architectural masterpiece early avoids the midday queues.", "Walk", "2 min", "2 min", 41.008, 28.980),
-                createStop("09:30", "09:40", "10 min", "Sultanahmet Square", "Istanbul", "Sultanahmet", "Photo Stop", "Brief photographic transit capturing the exterior of the Blue Mosque and Hagia Sophia.", "Walk", "400 m", "5 min", 41.006, 28.976),
-                createStop("09:40", "10:20", "40 min", "Basilica Cistern", "Istanbul", "Sultanahmet", "Historic", "Subterranean exploration of the 6th-century Byzantine water system. Medusa head sculptures.", "Walk", "2 min", "2 min", 41.008, 28.978),
-                createStop("10:20", "12:00", "1 hr 40 min", "Topkapı Palace & Harem", "Istanbul", "Sultanahmet", "Historic", "Exploration of the illuminated Ottoman Empire's nerve center. Focus strictly on the ornate Harem and Imperial Treasury.", "Walk", "600 m", "8 min", 41.011, 28.983),
-                createStop("12:00", "12:15", "15 min", "Transit to Spice Bazaar", "Istanbul", "Transit", "Transit", "Short downhill transfer from the Topkapi complex to the bustling Eminönü waterfront.", "Taxi", "2 km", "15 min", 41.014, 28.975),
-                createStop("12:15", "14:00", "1 hr 45 min", "Pandeli Restaurant", "Istanbul", "Eminönü", "Lunch", "Located inside the Egyptian Spice Bazaar. Michelin recognition, turquoise Iznik tiles, traditional lamb.", "Walk", "2 min", "2 min", 41.016, 28.970, true),
-                createStop("14:00", "14:30", "30 min", "Eminönü Waterfront", "Istanbul", "Eminönü", "Photo Stop", "A brief stroll to observe the iconic Balık Ekmek boats and the Galata Bridge maritime traffic.", "Walk", "5 min", "5 min", 41.018, 28.972),
-                createStop("14:30", "14:55", "25 min", "Return to Hotel", "Istanbul", "Transit", "Transit", "Return to Çırağan Palace to avoid the peak afternoon heat.", "Taxi", "7 km", "25 min", 41.030, 28.990),
-                createStop("14:55", "19:00", "4 hrs 5 min", "Hotel Rest", "Istanbul", "Beşiktaş", "Rest", "Leisure time. Opportunity to utilize the Bosphorus-front infinity pool or Sanitas Spa.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("19:00", "19:15", "15 min", "Transfer to Dinner", "Istanbul", "Transit", "Transit", "Transit to the Şişli/Bomonti district for the pinnacle culinary experience.", "Taxi", "5 km", "15 min", 41.050, 29.000),
-                createStop("19:15", "22:30", "3 hrs 15 min", "TURK Fatih Tutak", "Istanbul", "Bomonti", "Dinner", "Turkey's only 2-Michelin-Star restaurant. 12-course micro-seasonal tasting menu. Unhurried 3-hour journey.", "Walk", "0 min", "0 min", 41.058, 28.983, true),
-                createStop("22:30", "23:00", "30 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Private transfer back to the hotel from Bomonti after dinner.", "Taxi", "5 km", "20 min", 41.043, 29.016)
+                createStop("08:00", "08:45", "45m", "Hotel Breakfast — Early, Efficient", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Eat well; long, full day ahead; early start is essential to beat tour groups at Sultanahmet.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("08:45", "09:10", "25m", "En Route to Sultanahmet", "Istanbul", "Transit", "🚕 Transit", "Arrive at Hagia Sophia gate at 09:00 opening.", "Taxi", "7 km", "25m", 41.008, 28.978),
+                createStop("09:10", "10:00", "50m", "Hagia Sophia (Ayasofya)", "Istanbul", "Sultanahmet", "🕌 Iconic", "6th-century Byzantine cathedral of unprecedented scale; dome 55m high; golden mosaic fragments. Dress modestly.", "Walk", "0 km", "0m", 41.008, 28.980),
+                createStop("10:00", "11:50", "1h 50m", "Topkapi Palace + Harem", "Istanbul", "Sultanahmet", "🏛️ Iconic", "Nerve center of the Ottoman Empire for 400 years; Harem has 300+ rooms; Treasury holds the Spoonmaker's Diamond. Pre-book Harem.", "Walk", "400 m", "5m", 41.011, 28.983),
+                createStop("11:55", "12:35", "40m", "Basilica Cistern", "Istanbul", "Sultanahmet", "💧 Iconic", "Underground 6th-century Byzantine water palace; 336 columns; Medusa head sculptures; dramatically lit. Book in advance.", "Walk", "600 m", "8m", 41.008, 28.978),
+                createStop("12:40", "13:45", "1h 05m", "Deraliye Osmanlı Mutfağı", "Istanbul", "Sultanahmet", "🍽️ Lunch", "Authentic Ottoman palace recipes from the Topkapi kitchens; hünkar beğendi is essential; less touristy than it sounds.", "Walk", "300 m", "5m", 41.008, 28.976),
+                createStop("14:00", "15:30", "1h 30m", "Grand Bazaar (Kapalı Çarşı)", "Istanbul", "Sultanahmet", "🛍️ Shopping", "4,000 shops; focus on the jewelry quarter (gold and silver), handmade ceramics, Turkish silk; go deep into the bazaar.", "Walk", "800 m", "10m", 41.010, 28.968),
+                createStop("15:40", "16:20", "40m", "Spice Bazaar (Mısır Çarşısı)", "Istanbul", "Eminönü", "🌶️ Shopping", "Buy Turkish delight from Ali Muhiddin Hacı Bekir; saffron, sumac, fig jam; the smells and colours are extraordinary.", "Walk", "1.2 km", "15m", 41.016, 28.970),
+                createStop("16:20", "16:35", "15m", "Balık Ekmek — Fish Sandwich Boats", "Istanbul", "Eminönü", "🐟 Street Food", "Istanbul's most iconic street food; grilled mackerel in bread from rocking fishing boats; eat standing at the waterfront.", "Walk", "200 m", "3m", 41.018, 28.972),
+                createStop("16:40", "16:55", "15m", "Galata Bridge — Photo Stop", "Istanbul", "Karaköy", "📸 Photo Stop", "Fishermen lining the bridge; late afternoon light on the Golden Horn; stand at Eminönü end and photograph down.", "Walk", "700 m", "10m", 41.020, 28.973),
+                createStop("17:00", "17:30", "30m", "Karaköy Güllüoğlu — Pistachio Baklava", "Istanbul", "Karaköy", "🍯 Dessert", "The most celebrated baklava in Istanbul; order pistachio (fıstıklı) and sütlü nuriye; counter display is endlessly photographable.", "Walk", "200 m", "3m", 41.023, 28.977),
+                createStop("17:35", "17:50", "15m", "Umbrella Street (Enli Yokuş)", "Istanbul", "Karaköy", "📸 Photo Stop", "Lane decorated with hundreds of colorful overhead umbrellas; best with afternoon light punching through.", "Walk", "300 m", "5m", 41.025, 28.976),
+                createStop("18:00", "19:30", "1h 30m", "Return to Hotel + Freshen Up", "Istanbul", "Beşiktaş", "🏨 Rest", "Rest and change; tonight is Turkey's only 2-Michelin-Star restaurant; dress well; full energy required.", "Taxi", "7 km", "20m", 41.043, 29.016),
+                createStop("20:00", "23:00", "3h 00m", "TURK Fatih Tutak ★★", "Istanbul", "Beşiktaş", "⭐⭐ MICHELIN", "Turkey's only 2-Michelin-Star restaurant; Chef Fatih Tutak draws deep from Anatolian culinary heritage; 12-14 courses.", "Taxi", "5 km", "15m", 41.058, 28.983, true)
             ]},
-            { day: 3, city: "Istanbul", zone: "Retail & Ulus Hills", stops: [
-                createStop("09:00", "10:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Slower morning start following the extensive 12-course tasting menu.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("10:00", "10:05", "5 min", "Transfer to Retail Zone", "Istanbul", "Transit", "Transit", "Short uphill transit to Istanbul's most exclusive luxury shopping district.", "Taxi", "3.4 km", "5 min", 41.047, 29.000),
-                createStop("10:05", "13:05", "3 hrs", "Abdi İpekçi Street", "Istanbul", "Nişantaşı", "Shopping", "Exploration of the 'Rodeo Drive of Istanbul'. Chanel, Hermès, Dior, Vakko, and Beymen.", "Walk", "-", "-", 41.050, 28.990),
-                createStop("13:05", "14:20", "1 hr 15 min", "Kantin / Local Cafe", "Istanbul", "Nişantaşı", "Lunch", "A refined, modern Turkish lunch utilizing seasonal local produce in the heart of the district.", "Walk", "5 min", "5 min", 41.051, 28.991),
-                createStop("14:20", "14:40", "20 min", "Transfer to Zorlu", "Istanbul", "Transit", "Transit", "Transit from street-level boutiques to the premium enclosed shopping complex.", "Taxi", "5 km", "20 min", 41.058, 29.005),
-                createStop("14:40", "17:40", "3 hrs", "Zorlu Center", "Istanbul", "Zincirlikuyu", "Shopping", "Premier luxury mall featuring dramatic architecture, designer boutiques, and climate-controlled retail.", "Walk", "-", "-", 41.066, 29.017),
-                createStop("17:40", "18:00", "20 min", "Transfer to Ulus", "Istanbul", "Transit", "Transit", "Proceeding directly to the upscale Ulus hills for a sunset dining experience.", "Taxi", "4 km", "15 min", 41.066, 29.022),
-                createStop("18:00", "21:00", "3 hrs", "Sunset Grill & Bar", "Istanbul", "Ulus", "Dinner", "Elevated dining overlooking the Bosphorus. Mediterranean-Japanese menu. Golden hour light.", "Walk", "0 min", "0 min", 41.066, 29.028),
-                createStop("21:00", "21:20", "20 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Taxi down from the Ulus hills back to the Bosphorus waterfront.", "Taxi", "4 km", "15 min", 41.043, 29.016)
+            { day: 3, city: "Istanbul", zone: "Galata & Nişantaşı", stops: [
+                createStop("08:30", "09:15", "45m", "Hotel Breakfast", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Walking-heavy day ahead; fuel up properly; enjoy the Bosphorus breakfast view.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("09:15", "09:40", "25m", "En Route to Karaköy", "Istanbul", "Transit", "🚕 Transit", "Arrive in Galata while streets are still quiet.", "Taxi", "7 km", "20m", 41.023, 28.975),
+                createStop("09:40", "09:55", "15m", "Kamondo Stairs", "Istanbul", "Karaköy", "📸 Photo Stop", "19th-century curved double staircase commissioned by banker Abraham Kamondo; best angle from the bottom looking up.", "Walk", "-", "-", 41.023, 28.975),
+                createStop("10:00", "10:30", "30m", "SALT Galata — Architecture", "Istanbul", "Karaköy", "🏛️ Culture", "1892 Ottoman Bank building; monochrome marble floors, old bank vaults; one of Istanbul's most beautiful interior spaces.", "Walk", "150 m", "3m", 41.022, 28.973),
+                createStop("10:35", "11:30", "55m", "Galata Tower + Cobblestones", "Istanbul", "Beyoğlu", "🗼 Iconic", "Medieval Genoese tower (63m) with photogenic surrounding alleys; if queue is short, interior panoramic view covers both continents.", "Walk", "700 m", "10m", 41.025, 28.974),
+                createStop("11:35", "12:00", "25m", "Istiklal Street + French Street", "Istanbul", "Beyoğlu", "📸 Photo Stop", "Red tram running down the pedestrian boulevard; French Street off Galatasaray Square has painted facades.", "Walk", "300 m", "5m", 41.031, 28.978),
+                createStop("12:15", "13:30", "1h 15m", "Alaf — Modern Turkish (Upgraded)", "Istanbul", "Beyoğlu", "🍽️ Lunch", "Upgraded from generic Thai fusion. Modern Turkish cooking with a strong seasonal focus and exceptional Bosphorus views.", "Walk", "1 km", "10m", 41.031, 28.975),
+                createStop("13:45", "14:00", "15m", "En Route to Nişantaşı", "Istanbul", "Transit", "🚕 Transit", "Shift to Istanbul's premier luxury shopping district.", "Taxi", "4 km", "15m", 41.051, 28.991),
+                createStop("14:00", "17:30", "3h 30m", "Nişantaşı — Luxury Shopping", "Istanbul", "Nişantaşı", "🛍️ SHOPPING", "Turkey's premier luxury address; Chanel, LV, Hermès, Cartier on Abdi İpekçi; Beymen department store; Vakko.", "Walk", "-", "-", 41.051, 28.991),
+                createStop("17:30", "18:00", "30m", "Kantin — Afternoon Coffee", "Istanbul", "Nişantaşı", "☕ Cafe", "Beloved Nişantaşı institution; seasonal locally-sourced Turkish cafe; rest the shopping bags and people-watch.", "Walk", "200 m", "5m", 41.051, 28.991),
+                createStop("18:15", "19:30", "1h 15m", "Mikla Rooftop Bar — Cocktails", "Istanbul", "Beyoğlu", "🍸 Pre-Dinner", "Bosphorus and Golden Horn panorama at dusk; order the Anatolian Old Fashioned before dinner; skyline at golden hour.", "Taxi", "4 km", "15m", 41.031, 28.975),
+                createStop("20:00", "22:30", "2h 30m", "Neolokal ★ + Green Star", "Istanbul", "Karaköy", "⭐ MICHELIN", "Inside SALT Galata; Chef Maksut Aşkar revives ancient Anatolian recipes; the bulgur 'cupcakes' are the signature.", "Taxi", "2 km", "10m", 41.022, 28.973, true)
             ]},
-            { day: 4, city: "Istanbul", zone: "Galata & Beyoğlu", stops: [
-                createStop("09:30", "10:30", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Restful morning before transitioning to the bohemian and historic Galata neighborhood.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("10:30", "10:48", "18 min", "Transfer to Galata", "Istanbul", "Transit", "Transit", "Transit across the urban core to the Galata Tower district.", "Taxi", "4.7 km", "18 min", 41.035, 28.990),
-                createStop("10:48", "12:48", "2 hrs", "Old Java Coffee Roaster", "Istanbul", "Galata", "Cafe", "Fulfilling the fixed requirement for high-quality animal cafes. Cortados and resident cats. Exact 2-hour block.", "Walk", "-", "-", 41.025, 28.974),
-                createStop("12:48", "13:30", "42 min", "Galata Tower", "Istanbul", "Galata", "Viewpoint", "The medieval Genoese tower provides 360-degree views of the historic peninsula. Pre-booked elevator access.", "Walk", "5 min", "5 min", 41.025, 28.974),
-                createStop("13:30", "13:45", "15 min", "Kamondo Stairs", "Istanbul", "Karaköy", "Photo Stop", "A brief, highly photogenic stop at the 19th-century curved stone staircase. Viral photo spot logic.", "Walk", "5 min", "5 min", 41.023, 28.975),
-                createStop("13:45", "16:15", "2 hrs 30 min", "Neolokal", "Istanbul", "Karaköy", "Lunch", "1-Michelin-Star dining at SALT Galata. Chef Maksut Aşkar revives ancient Anatolian recipes.", "Walk", "5 min", "5 min", 41.022, 28.973, true),
-                createStop("16:15", "18:15", "2 hrs", "Karaköy Exploration", "Istanbul", "Karaköy", "Street", "Leisurely stroll through Karaköy's umbrella-canopied streets. Mandatory 30-min stop at Karaköy Güllüoğlu.", "Walk", "-", "-", 41.023, 28.977),
-                createStop("18:15", "18:25", "10 min", "Füniküler to Istiklal", "Istanbul", "Transit", "Transit", "Taking the historic Tünel up the steep hill, avoiding physical climbing.", "Funicular", "1 km", "10 min", 41.026, 28.976),
-                createStop("18:25", "22:00", "3 hrs 35 min", "Mikla", "Istanbul", "Beyoğlu", "Dinner", "1-Michelin-Star New Anatolian cuisine atop Marmara Pera Hotel. Rooftop cocktails and tasting menu.", "Walk", "10 min", "10 min", 41.031, 28.975, true),
-                createStop("22:00", "22:30", "30 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Transfer from Beyoğlu back to Beşiktaş.", "Taxi", "5 km", "20 min", 41.043, 29.016)
+            { day: 4, city: "Istanbul", zone: "Palaces & Bosphorus", stops: [
+                createStop("08:30", "09:30", "1h 00m", "Hotel Breakfast — Leisurely", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Later start today; one of the less intense mornings; enjoy the Bosphorus view.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("09:30", "09:45", "15m", "Walk to Dolmabahçe Palace", "Istanbul", "Beşiktaş", "🚶 Walk", "Morning walk along the Bosphorus promenade to the palace.", "Walk", "900 m", "12m", 41.039, 28.998),
+                createStop("10:00", "11:00", "1h 00m", "Dolmabahçe Palace — Guided Tour", "Istanbul", "Beşiktaş", "🏛️ Iconic", "19th-century Ottoman palace — world's largest chandelier (4.5 tonnes); Atatürk's bedroom; throne room is staggering.", "Walk", "0 km", "0m", 41.039, 28.998),
+                createStop("11:00", "11:20", "20m", "Dolmabahçe Gate + Clock Tower", "Istanbul", "Beşiktaş", "📸 Photo Stop", "Ornate waterfront gate and clock tower are among the most photographed palace views; Bosphorus as backdrop.", "Walk", "100 m", "2m", 41.037, 28.995),
+                createStop("11:30", "12:30", "1h 00m", "Arnavutköy Seafood Lunch", "Istanbul", "Arnavutköy", "🐟 Lunch", "Preserved 19th-century fishing village; order hamsi, levrek, midye directly on the Bosphorus; deeply local feeling.", "Taxi/Walk", "2 km", "10m", 41.067, 29.043),
+                createStop("12:30", "13:00", "30m", "Arnavutköy Village Stroll", "Istanbul", "Arnavutköy", "🚶 Walk", "Walk the waterfront; old wooden houses in pastel colours; quiet, beautiful midday light.", "Walk", "500m", "10m", 41.067, 29.043),
+                createStop("13:15", "13:35", "20m", "En Route to Zorlu Center", "Istanbul", "Transit", "🚕 Transit", "Shift to the afternoon shopping leg.", "Taxi", "5 km", "15m", 41.066, 29.017),
+                createStop("13:35", "16:30", "2h 55m", "Zorlu Center — Luxury Mall", "Istanbul", "Beşiktaş", "🛍️ SHOPPING", "180+ boutiques; Gucci, Prada, Dior, Eataly; the performing arts centre is architecturally stunning.", "Walk", "-", "-", 41.066, 29.017),
+                createStop("16:45", "17:00", "15m", "En Route to Sunset Grill", "Istanbul", "Transit", "🚕 Transit", "Heading to hilltop bar for the golden hour.", "Taxi", "5 km", "15m", 41.066, 29.028),
+                createStop("17:00", "19:30", "2h 30m", "Sunset Grill & Bar — Cocktails", "Istanbul", "Ulus", "🌅 Cocktails", "Hilltop terrace perched above the Bosphorus; strong Anatolian wine selection; most romantic pre-dinner moment.", "Walk", "0 km", "0m", 41.066, 29.028),
+                createStop("20:00", "22:30", "2h 30m", "Mikla ★ — Dinner", "Istanbul", "Beyoğlu", "⭐ MICHELIN", "Rooftop of Marmara Pera; Chef Mehmet Gürs blends Turkish and Scandinavian flavours; 180° views.", "Taxi", "8 km", "20m", 41.031, 28.975, true),
+                createStop("22:30", "00:30", "2h 00m", "Mikla Rooftop Bar — Nightlife", "Istanbul", "Beyoğlu", "🍸 Nightlife", "Stay on the rooftop; the city at night from this height is mesmerising.", "Walk", "0 km", "0m", 41.031, 28.975)
             ]},
-            { day: 5, city: "Istanbul", zone: "Palaces & Yachts", stops: [
-                createStop("09:00", "10:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Morning preparation for a Bosphorus-centric and historic day.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("10:00", "11:30", "1 hr 30 min", "Dolmabahçe Palace", "Istanbul", "Beşiktaş", "Historic", "19th-century opulent waterfront palace featuring crystal staircases. Timed entry bypasses tourist queues.", "Taxi", "2 km", "10 min", 41.039, 28.998),
-                createStop("11:30", "11:55", "25 min", "Transfer to Balat", "Istanbul", "Transit", "Transit", "Journey across the Golden Horn to the historic, bohemian Jewish and Greek quarters.", "Taxi", "8 km", "25 min", 41.035, 28.970),
-                createStop("11:55", "12:55", "1 hr", "Balat Neighbourhood Walk", "Istanbul", "Balat", "Street", "Highly photogenic exploration of rainbow-painted Ottoman houses and steep cobblestone streets.", "Walk", "5 min", "5 min", 41.031, 28.948),
-                createStop("12:55", "14:55", "2 hrs", "Cafe Naftalin K", "Istanbul", "Balat", "Cafe", "Second required 2-hour feline cafe experience. Nostalgic decor, exceptional coffee, and resident cats.", "Walk", "-", "-", 41.031, 28.948),
-                createStop("14:55", "15:10", "15 min", "Transfer to Bazaar", "Istanbul", "Transit", "Transit", "Transit to the historic trading center for the second retail block.", "Taxi", "4 km", "15 min", 41.020, 28.955),
-                createStop("15:10", "17:10", "2 hrs", "Grand Bazaar (Kapalıçarşı)", "Istanbul", "Sultanahmet", "Shopping", "Exploration of the world's oldest covered market. Focus strictly on premium Turkish goods.", "Walk", "-", "-", 41.010, 28.968),
-                createStop("17:10", "17:35", "25 min", "Return to Hotel", "Istanbul", "Transit", "Transit", "Return to Beşiktaş for decompression time.", "Taxi", "8 km", "25 min", 41.025, 28.990),
-                createStop("17:35", "19:35", "2 hrs", "Private Sunset Cruise", "Istanbul", "Bosphorus", "Activity", "Deeply romantic 2-hour private yacht charter. Champagne service passing waterfront wooden mansions (Yalı).", "Yacht", "Board at Dock", "-", 41.043, 29.016),
-                createStop("19:35", "19:50", "15 min", "Transfer to Dinner", "Istanbul", "Transit", "Transit", "Short drive further north along the European shore to Bebek.", "Taxi", "6 km", "15 min", 41.060, 29.030),
-                createStop("19:50", "22:50", "3 hrs", "Sankai by Nagaya", "Istanbul", "Bebek", "Dinner", "1-Michelin-Star Japanese omakase at the Bebek Hotel. Edomae-style sushi and sweeping Bosphorus views.", "Walk", "0 min", "0 min", 41.077, 29.043, true),
-                createStop("22:50", "23:15", "25 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Scenic night drive south along the Bosphorus back to the hotel.", "Taxi", "6 km", "15 min", 41.043, 29.016)
+            { day: 5, city: "Istanbul", zone: "Balat & Asian Side", stops: [
+                createStop("07:45", "08:30", "45m", "Quick Breakfast / Simit", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Earlier start for Balat — morning light and emptiness are the whole point; lighter breakfast.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("08:30", "08:50", "20m", "En Route to Balat", "Istanbul", "Transit", "🚕 Transit", "Arrive before 09:00 for empty streets.", "Taxi", "8 km", "20m", 41.031, 28.948),
+                createStop("09:00", "10:30", "1h 30m", "Balat Neighborhood — Murals", "Istanbul", "Fatih", "📸 Photography", "Hillside streets of rainbow-painted Ottoman wooden houses; street cats; murals; no tourists at this hour.", "Walk", "-", "-", 41.031, 28.948),
+                createStop("10:30", "11:00", "30m", "Fener — Orthodox Patriarchate", "Istanbul", "Fatih", "🕍 Hidden Gem", "Ecumenical Patriarchate of Constantinople; Church of St George; almost no tourists.", "Walk", "1 km", "10m", 41.029, 28.951),
+                createStop("11:15", "11:40", "25m", "Ferry: Eminönü → Kadıköy", "Istanbul", "Transit", "⛴️ Transit", "The 25-min Bosphorus crossing is one of Istanbul's great pleasures; buy simit on board.", "Taxi+Ferry", "5 km", "25m", 41.018, 28.972),
+                createStop("12:00", "13:15", "1h 15m", "Kadıköy Market + Lunch", "Istanbul", "Kadıköy", "🥙 Market", "The Asian side's legendary food market; eat kumpir, midye dolma, köfte; where locals actually shop.", "Walk", "1 km", "10m", 40.990, 29.025),
+                createStop("13:15", "13:45", "30m", "Fazıl Bey's Turkish Coffee", "Istanbul", "Kadıköy", "☕ Coffee", "The Asian side's legendary coffee shop; thick traditional Turkish coffee unchanged for a century.", "Walk", "500 m", "5m", 40.990, 29.025),
+                createStop("14:00", "14:25", "25m", "Ferry: Kadıköy → Eminönü", "Istanbul", "Transit", "⛴️ Transit", "European skyline assembles as you approach — Hagia Sophia, Topkapi; money shot of the round trip.", "Walk+Ferry", "5 km", "25m", 41.018, 28.972),
+                createStop("14:40", "15:00", "20m", "En Route to Istinye Park", "Istanbul", "Transit", "🚕 Transit", "Further north along the European shore.", "Taxi", "15 km", "25m", 41.111, 29.033),
+                createStop("15:00", "17:30", "2h 30m", "Istinye Park — Luxury Mall", "Istanbul", "Sarıyer", "🛍️ SHOPPING", "291 stores; Hermès, Cartier, Chanel; open-air village zone is excellent in September weather.", "Walk", "-", "-", 41.111, 29.033),
+                createStop("17:45", "19:30", "1h 45m", "Return to Hotel + Rest (Fixed)", "Istanbul", "Beşiktaş", "🏨 Rest", "Route optimized: return directly to hotel without Sultanahmet detour. Saves 45 min for Nicole preparation.", "Taxi", "10 km", "25m", 41.043, 29.016),
+                createStop("20:00", "22:30", "2h 30m", "Nicole ★ — Tasting Menu", "Istanbul", "Beyoğlu", "⭐ MICHELIN", "Rooftop of historic 1901 building; Chef Serkan Aksoy; dolmas with smoked yogurt; most romantic setting.", "Taxi", "7 km", "20m", 41.030, 28.978, true),
+                createStop("22:30", "01:00", "2h 30m", "360 Istanbul — Club", "Istanbul", "Beyoğlu", "🎶 Nightlife", "Penthouse on Istiklal; genuine 360° city panorama; DJ sets; dance floor fills by midnight.", "Walk", "1 km", "10m", 41.033, 28.976)
             ]},
-            { day: 6, city: "Istanbul", zone: "Asian Side & Nightlife", stops: [
-                createStop("10:00", "11:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Late start to accommodate the previous evening's late dining.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("11:00", "11:45", "45 min", "Bosphorus Ferry to Kadıköy", "Istanbul", "Transit", "Transit", "A scenic, local public ferry crossing from the European to the Asian side of Istanbul.", "Ferry", "5 km", "30 min", 41.042, 29.006),
-                createStop("11:45", "12:30", "45 min", "Fazıl Bey's Turkish Coffee", "Istanbul", "Kadıköy", "Cafe", "Established in 1923, serves arguably the finest traditional Turkish coffee in the city.", "Walk", "10 min", "10 min", 40.990, 29.025),
-                createStop("12:30", "14:30", "2 hrs", "Kadıköy Çarşısı & Lunch", "Istanbul", "Kadıköy", "Street", "Exploration of the vibrant local food market. Lunch consists of authentic, high-quality street food.", "Walk", "-", "-", 40.990, 29.025),
-                createStop("14:30", "16:00", "1 hr 30 min", "Moda Coastal Walk", "Istanbul", "Moda", "Street", "A relaxing stroll through the upscale Moda neighborhood and coastal park, devoid of tourist crowds.", "Walk", "-", "-", 40.985, 29.020),
-                createStop("16:00", "17:00", "1 hr", "Ferry Return & Rest", "Istanbul", "Transit", "Transit", "Return to the European side to rest and prepare for an evening entirely focused on high-end nightlife.", "Ferry/Taxi", "7 km", "1 hr", 41.020, 29.010),
-                createStop("17:00", "19:30", "2 hrs 30 min", "Hotel Rest", "Istanbul", "Beşiktaş", "Rest", "Extended rest and preparation for a late night.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("19:30", "22:00", "2 hrs 30 min", "Nicole", "Istanbul", "Cihangir", "Dinner", "1-Michelin-Star dining on a Beyoğlu rooftop. Chef Serkan Aksoy delivers sophisticated Turkish flavors.", "Taxi", "4 km", "15 min", 41.030, 28.978, true),
-                createStop("22:00", "01:00", "3 hrs", "Sortie Club Complex", "Istanbul", "Kuruçeşme", "Nightlife", "Istanbul's most glamorous waterfront nightlife venue. International DJs and an elite crowd.", "Taxi", "5 km", "15 min", 41.055, 29.034),
-                createStop("01:00", "01:15", "15 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Short waterfront transfer back to the palace.", "Taxi", "3 km", "10 min", 41.043, 29.016)
+            { day: 6, city: "Istanbul", zone: "Cruise & Omakase", stops: [
+                createStop("08:30", "09:30", "1h 00m", "Hotel Breakfast", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Lighter eating during the day; tonight is Sankai (omakase) — do not overeat at lunch.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("09:45", "10:10", "25m", "En Route to Eminönü", "Istanbul", "Transit", "🚕 Transit", "Morning is the right time for this area — fresh stock, fewer crowds.", "Taxi", "7 km", "20m", 41.018, 28.972),
+                createStop("10:10", "10:30", "20m", "Mandabatmaz Coffee (Upgraded)", "Istanbul", "Sultanahmet", "☕ Coffee", "Moved here to fix backtracking. Tiny standing-room kiosk; one cup, sip slowly; famous traditional coffee ritual.", "Walk", "1 km", "10m", 41.033, 28.977),
+                createStop("10:35", "10:55", "20m", "Süleymaniye Mosque Terrace", "Istanbul", "Eminönü", "📸 Photo Stop", "Mimar Sinan's 1557 masterpiece exterior; finest free panoramic views in Istanbul; photography-rich stop.", "Walk", "1 km", "10m", 41.016, 28.964),
+                createStop("11:05", "11:20", "15m", "En Route to Pierre Loti", "Istanbul", "Transit", "🚕 Transit", "Short taxi to the Eyüp cable car station.", "Taxi", "3 km", "10m", 41.053, 28.934),
+                createStop("11:20", "12:30", "1h 10m", "Pierre Loti Tepesi — Tea", "Istanbul", "Eyüp", "🌿 Hidden Gem", "Hilltop cafe; sweeping panorama of Golden Horn snaking below; Turkish tea; Ottoman cemetery below.", "Cable Car", "-", "5m", 41.053, 28.934),
+                createStop("13:00", "14:00", "1h 00m", "Light Kebab or Lokanta", "Istanbul", "Beşiktaş", "🍽️ Lunch", "Keep lunch very light before the omakase; Develi or clean lokanta; do not overeat.", "Taxi", "8 km", "20m", 41.043, 29.006),
+                createStop("14:15", "16:30", "2h 15m", "Kanyon — Harvey Nichols", "Istanbul", "Levent", "🛍️ SHOPPING", "Architecturally extraordinary open-air canyon mall; pick up remaining shopping items.", "Taxi", "10 km", "20m", 41.077, 29.011),
+                createStop("16:45", "17:00", "15m", "En Route to Beşiktaş Pier", "Istanbul", "Transit", "🚕 Transit", "Hotel has arranged a private boat departure from pier.", "Taxi", "5 km", "15m", 41.042, 29.006),
+                createStop("17:00", "19:30", "2h 30m", "Private Bosphorus Sunset Cruise", "Istanbul", "Bosphorus", "⛵ SIGNATURE", "THE defining romantic Istanbul experience; pass palaces from water; silhouette at sunset; champagne included.", "Private Boat", "-", "-", 41.042, 29.006),
+                createStop("20:00", "22:45", "2h 45m", "Sankai by Nagaya ★", "Istanbul", "Bebek", "⭐ MICHELIN", "Michelin-starred Japanese omakase by Chef Yoshizumi Nagaya; technically flawless; trust the chef completely.", "Taxi", "8 km", "20m", 41.077, 29.043, true),
+                createStop("23:00", "00:30", "1h 30m", "Alexandra Cocktail Bar", "Istanbul", "Arnavutköy", "🍸 Nightlife", "Right on Bosphorus waterfront; intimate; zero tourists; Bosphorus Bridge lights reflecting at midnight.", "Walk", "1 km", "10m", 41.067, 29.043)
             ]},
-            { day: 7, city: "Istanbul", zone: "Spa & Seafood", stops: [
-                createStop("11:00", "12:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Late wake-up following the nightclub experience.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("12:00", "16:00", "4 hrs", "Sanitas Spa & Hammam", "Istanbul", "Beşiktaş", "Activity", "A slow, luxurious recovery day. Exclusive use of the marble hammam for a traditional Turkish bath and massage.", "Walk", "0 min", "0 min", 41.043, 29.016),
-                createStop("16:00", "16:20", "20 min", "Transfer to Arnavutköy", "Istanbul", "Transit", "Transit", "Transit along the Bosphorus to the preserved fishing village of Arnavutköy.", "Taxi", "4 km", "15 min", 41.055, 29.030),
-                createStop("16:20", "17:30", "1 hr 10 min", "Arnavutköy Exploration", "Istanbul", "Arnavutköy", "Street", "A quiet stroll admiring the historic wooden mansions (Yalı) along the waterfront.", "Walk", "-", "-", 41.067, 29.043),
-                createStop("17:30", "19:30", "2 hrs", "Alexandra Cocktail Bar", "Istanbul", "Arnavutköy", "Nightlife", "Highly regarded for creative mixology and a stunning rooftop view of the Bosphorus.", "Walk", "2 min", "2 min", 41.067, 29.043),
-                createStop("19:30", "21:30", "2 hrs", "Local Seafood Dinner", "Istanbul", "Arnavutköy", "Dinner", "A premium, sit-down local seafood experience overlooking the water.", "Walk", "2 min", "2 min", 41.067, 29.043),
-                createStop("21:30", "21:50", "20 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Transfer back to the hotel to pack for tomorrow's flight.", "Taxi", "4 km", "15 min", 41.043, 29.016)
+            { day: 7, city: "Istanbul", zone: "Farewell Day", stops: [
+                createStop("08:30", "09:30", "1h 00m", "Hotel Breakfast — Last Morning", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Linger over it; last full day in Istanbul; morning Bosphorus view.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("09:30", "09:55", "25m", "En Route to Cihangir", "Istanbul", "Transit", "🚕 Transit", "Cihangir is best before the brunch crowd arrives.", "Taxi", "7 km", "20m", 41.031, 28.983),
+                createStop("10:00", "11:30", "1h 30m", "Cihangir — Bohemian Wander", "Istanbul", "Beyoğlu", "🎨 Hidden Gem", "19th-century apartment buildings; antique shops; cats on every step; explore at will.", "Walk", "-", "-", 41.031, 28.983),
+                createStop("11:30", "12:00", "30m", "Naif Cafe — Morning Coffee", "Istanbul", "Beyoğlu", "☕ Cafe", "Beloved neighborhood cafe; local cultural crowd; unhurried tempo for last morning.", "Walk", "200 m", "5m", 41.031, 28.983),
+                createStop("12:15", "13:30", "1h 15m", "Lokanta Maya — Lunch", "Istanbul", "Karaköy", "🍽️ Lunch", "Quality seasonal Turkish food in design-forward Karaköy space; fish and vegetable dishes.", "Walk/Taxi", "1.5 km", "15m", 41.023, 28.975),
+                createStop("14:15", "17:00", "2h 45m", "Galataport — Waterfront Shopping", "Istanbul", "Karaköy", "🛍️ SHOPPING", "Newest premium waterfront development; luxury boutiques; buy final artisan ceramics, leather.", "Walk", "700 m", "10m", 41.025, 28.981),
+                createStop("17:00", "18:30", "1h 30m", "Return to Hotel — Final Pack", "Istanbul", "Beşiktaş", "🏨 Pack", "Organize shopping; check luggage weight; pack properly; rest before farewell dinner.", "Taxi", "5 km", "15m", 41.043, 29.016),
+                createStop("19:30", "22:00", "2h 30m", "Alaf — Farewell Dinner (Upgraded)", "Istanbul", "Beyoğlu", "🍽️ FAREWELL", "Upgraded from Tugra. Modern Turkish cooking, Bosphorus terrace, correct energy for farewell dinner.", "Taxi", "5 km", "20m", 41.031, 28.975),
+                createStop("22:30", "02:00", "3h 30m", "Sortie — Waterfront Club", "Istanbul", "Kuruçeşme", "🎉 NIGHTLIFE", "Istanbul's most glamorous nightlife venue; multi-floor complex directly on Bosphorus shore; go all in.", "Taxi", "3 km", "10m", 41.055, 29.034)
             ]},
-            { day: 8, city: "Cappadocia", zone: "Transit to Caves", stops: [
-                createStop("08:30", "09:20", "50 min", "Çırağan Palace Check-out & Transfer", "Istanbul", "Transit", "Transit", "Private transfer to Istanbul Airport for the domestic departure to the Anatolian plateau.", "Taxi", "40 km", "50 min", 41.260, 28.740),
-                createStop("09:20", "12:40", "3 hrs 20 min", "Flight IST to NAV", "Air", "Transit", "Flight", "Turkish Airlines TK2004. Domestic business class guarantees optimal comfort.", "Flight", "700 km", "1 hr 20m", 38.770, 34.670),
-                createStop("12:40", "13:20", "40 min", "Private Airport Transfer", "Cappadocia", "Transit", "Transit", "Private luxury transfer through the surreal volcanic landscapes up to the elevated village of Uçhisar.", "VIP Van", "35 km", "40 min", 38.700, 34.730),
-                createStop("13:20", "14:20", "1 hr", "Museum Hotel Check-in", "Cappadocia", "Uçhisar", "Check-in", "Check-in at the only Relais & Châteaux property in Turkey. Imperial Pool Suite.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("14:20", "18:20", "4 hrs", "Hotel Infinity Pool & Rest", "Cappadocia", "Uçhisar", "Rest", "Decompression time utilizing the Roman-style heated outdoor infinity pool offering panoramic views.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("18:20", "20:30", "2 hrs 10 min", "Lil'a Restaurant", "Cappadocia", "Uçhisar", "Dinner", "Fine dining within the Museum Hotel. Elegant interpretations of classic Cappadocian recipes.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("20:30", "20:45", "15 min", "Return to Suite", "Cappadocia", "Uçhisar", "Rest", "Retire to the Imperial Pool Suite.", "Walk", "0 km", "5 min", 38.630, 34.805)
+            { day: 8, city: "Cappadocia", zone: "Arrival & Cave Luxury", stops: [
+                createStop("07:30", "08:15", "45m", "Breakfast + Check-Out", "Istanbul", "Beşiktaş", "🥐 Breakfast", "Early departure; luggage to lobby; last Bosphorus morning for 8 days.", "Walk", "0 km", "0m", 41.043, 29.016),
+                createStop("08:30", "09:15", "45m", "Private Car to IST Airport", "Istanbul", "Transit", "🚗 Transit", "Allow 2+ hours before domestic departure.", "Private Car", "40 km", "45-55m", 41.260, 28.740),
+                createStop("09:15", "10:30", "1h 15m", "IST Check-In + Lounge", "Istanbul", "Airport", "✈️ Airport", "Domestic terminal; efficient security; use the lounge for coffee.", "Walk", "-", "-", 41.260, 28.740),
+                createStop("11:00", "12:15", "1h 15m", "FLIGHT: IST → NAV", "Turkish Skies", "Transit", "✈️ Flight", "On descent, look out the right window: fairy chimney formations appear.", "Flight", "-", "-", 38.770, 34.670),
+                createStop("12:15", "13:00", "45m", "NAV to Üçhisar Transfer", "Cappadocia", "Transit", "🚗 Transfer", "Driving through the Cappadocian plateau; landscape is unlike anywhere on earth.", "Private Car", "35 km", "40m", 38.630, 34.805),
+                createStop("13:00", "14:30", "1h 30m", "Museum Hotel — Check-In", "Cappadocia", "Üçhisar", "🏨 Hotel", "Relais & Châteaux property; room carved into volcanic rock; valley-view suite. Take 30 min to simply look.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("14:30", "15:30", "1h 00m", "Üçhisar Castle Viewpoint", "Cappadocia", "Üçhisar", "🏰 Viewpoint", "Highest point in Cappadocia; 360° views of valleys; gives you the mental map.", "Walk", "500 m", "10m", 38.629, 34.805),
+                createStop("15:45", "17:00", "1h 15m", "Museum Hotel Infinity Pool", "Cappadocia", "Üçhisar", "🏊 Rest", "Heated infinity pool overlooks entire valley; first Turkish tea on cave terrace.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("17:00", "18:30", "1h 30m", "Argos Wine Cellar Tasting", "Cappadocia", "Üçhisar", "🍷 Hidden Gem", "Underground cellar carved into rock; private tasting with sommelier; one of the great luxury experiences.", "Walk/Taxi", "1 km", "5m", 38.630, 34.805),
+                createStop("19:30", "21:30", "2h 00m", "Museum Hotel (Lil'a) Dinner", "Cappadocia", "Üçhisar", "🍽️ Dinner", "Cave dining room; local Cappadocian cuisine — testi kebabı; Milky Way visible; decompression night.", "Walk", "0 km", "0m", 38.630, 34.805)
             ]},
-            { day: 9, city: "Cappadocia", zone: "Balloons & Valleys", stops: [
-                createStop("04:45", "05:15", "30 min", "Museum Hotel Pre-flight Prep", "Cappadocia", "Uçhisar", "Transit", "Extremely early wake-up required for the signature Cappadocia experience.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("05:15", "08:00", "2 hrs 45 min", "Private Hot Air Balloon", "Cappadocia", "Valleys", "Activity", "Private basket drifting over the fairy chimneys at sunrise. Concludes with a champagne toast.", "VIP Van", "Var", "-", 38.650, 34.830),
-                createStop("08:00", "09:30", "1 hr 30 min", "Museum Hotel Breakfast", "Cappadocia", "Uçhisar", "Breakfast", "Extensive traditional breakfast on the hotel terrace, watching the remaining balloons descend.", "VIP Van", "10 km", "20 min", 38.630, 34.805),
-                createStop("09:30", "09:36", "6 min", "Transfer to Göreme", "Cappadocia", "Transit", "Transit", "Short downhill transit to the primary historical site.", "Taxi", "5.8 km", "6 min", 38.635, 34.825),
-                createStop("09:36", "11:30", "1 hr 54 min", "Göreme Open Air Museum", "Cappadocia", "Göreme", "Historic", "UNESCO-listed network of rock-cut churches with 10th-century Byzantine frescoes. Flat walking.", "Walk", "-", "-", 38.640, 34.845),
-                createStop("11:30", "13:00", "1 hr 30 min", "Local Gözleme Lunch", "Cappadocia", "Göreme", "Lunch", "Authentic local lunch focusing on fresh Gözleme and pottery kebab.", "Walk", "1 km", "15 min", 38.643, 34.831),
-                createStop("13:00", "13:30", "30 min", "Love Valley Photo Stop", "Cappadocia", "Love Valley", "Photo Stop", "A brief stop at the viewpoint overlooking the famous phallic rock formations. Zero physical exertion.", "Taxi", "4 km", "10 min", 38.659, 34.832),
-                createStop("13:30", "16:30", "3 hrs", "Return to Hotel & Rest", "Cappadocia", "Uçhisar", "Rest", "Return to the suite for a mandatory midday rest to offset the 4:45 AM wake-up call.", "Taxi", "6 km", "15 min", 38.630, 34.805),
-                createStop("16:30", "18:00", "1 hr 30 min", "Rose Valley Sunset Drive", "Cappadocia", "Rose Valley", "Activity", "Driven tour to scenic viewpoints as the volcanic rock turns pink. Exertion kept to absolute minimum.", "VIP Van", "8 km", "20 min", 38.655, 34.850),
-                createStop("18:00", "20:00", "2 hrs", "Premium Cave Dinner", "Cappadocia", "Ürgüp", "Dinner", "A high-end regional dinner at a boutique cave restaurant (e.g., Seki Restaurant).", "Taxi", "12 km", "20 min", 38.630, 34.910),
-                createStop("20:00", "20:30", "30 min", "Return to Museum Hotel", "Cappadocia", "Transit", "Transit", "Transfer from Ürgüp back to Uçhisar.", "Taxi", "12 km", "20 min", 38.630, 34.805)
+            { day: 9, city: "Cappadocia", zone: "Balloons & Geology", stops: [
+                createStop("04:45", "05:00", "15m", "Wake-Up + Departure Prep", "Cappadocia", "Üçhisar", "⏰ Wake", "Dress warmly; hotel wake-up call; camera charged.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("05:00", "05:30", "30m", "Transfer to Balloon Launch", "Cappadocia", "Transit", "🚗 Transit", "Transfer to field as sky turns deep purple; pre-dawn inflation.", "Van", "10 km", "30m", 38.650, 34.830),
+                createStop("05:30", "07:00", "1h 30m", "HOT AIR BALLOON (Private)", "Cappadocia Skies", "Valleys", "🎈 SIGNATURE", "THE defining experience. Private basket for two; launch at first light; champagne landing.", "Balloon", "-", "-", 38.650, 34.830),
+                createStop("07:00", "07:30", "30m", "Return Transfer to Hotel", "Cappadocia", "Transit", "🚗 Transit", "Warm, happy, completely in love with Cappadocia.", "Van", "10 km", "30m", 38.630, 34.805),
+                createStop("07:30", "09:30", "2h 00m", "Cave Hotel Breakfast", "Cappadocia", "Üçhisar", "🍳 Breakfast", "Best breakfast of the trip; watch last balloons from terrace; gözleme, honey, kaymak.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("10:00", "10:20", "20m", "Drive to Göreme", "Cappadocia", "Transit", "🚗 Transit", "Pre-arranged driver strongly recommended.", "Car", "6 km", "15m", 38.640, 34.845),
+                createStop("10:20", "11:50", "1h 30m", "Göreme Open Air Museum", "Cappadocia", "Göreme", "🏛️ UNESCO", "Byzantine rock-cut churches; Karanlik Kilise frescoes; cave monastery architecture.", "Walk", "-", "-", 38.640, 34.845),
+                createStop("12:00", "12:20", "20m", "Drive to Paşabağ", "Cappadocia", "Transit", "🚗 Transit", "On the route northward.", "Car", "5 km", "15m", 38.675, 34.855),
+                createStop("12:20", "13:00", "40m", "Paşabağ (Monk's Valley)", "Cappadocia", "Paşabağ", "📸 Iconic", "Dramatic triple-headed mushroom fairy chimneys; genuinely jaw-dropping geology.", "Walk", "-", "-", 38.675, 34.855),
+                createStop("13:10", "14:15", "1h 05m", "Lunch: Testi Kebabı", "Cappadocia", "Göreme", "🍽️ Lunch", "Lamb slow-cooked in sealed clay pot, smashed tableside; authentic local spot.", "Car", "6 km", "10m", 38.643, 34.831),
+                createStop("14:30", "15:15", "45m", "Devrent Valley (Imagination)", "Cappadocia", "Devrent", "🌄 Valley", "Open valley of uniquely shaped rock formations; camel-shaped rock; excellent photography.", "Car", "8 km", "15m", 38.665, 34.860),
+                createStop("15:30", "16:30", "1h 00m", "Rose Valley Stroll", "Cappadocia", "Rose Valley", "🌹 Valley Walk", "Ochre canyon glowing amber; flat valley floor path; 15:30 light is extraordinary.", "Car/Walk", "5 km", "15m", 38.655, 34.850),
+                createStop("16:45", "17:00", "15m", "Love Valley Photo Stop", "Cappadocia", "Love Valley", "📸 Photo Stop", "Phallic fairy chimneys; required Cappadocia tick; 15 mins is enough.", "Car", "4 km", "10m", 38.659, 34.832),
+                createStop("17:15", "19:00", "1h 45m", "Museum Hotel Spa Hammam", "Cappadocia", "Üçhisar", "💆 Spa", "Cave hammam carved into rock; deeply therapeutic after long day; private couples session.", "Car", "6 km", "15m", 38.630, 34.805),
+                createStop("19:30", "22:00", "2h 30m", "Seki Restaurant (Argos)", "Cappadocia", "Üçhisar", "🍽️ Dinner", "Terrace tables overlooking Pigeon Valley; Milky Way visible; slow dinner under stars.", "Walk", "1 km", "5m", 38.630, 34.805)
             ]},
-            { day: 10, city: "Cappadocia", zone: "Underground & Castle", stops: [
-                createStop("09:00", "10:00", "1 hr", "Museum Hotel Breakfast", "Cappadocia", "Uçhisar", "Breakfast", "Relaxed morning start.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("10:00", "10:29", "29 min", "Transfer to Kaymaklı", "Cappadocia", "Transit", "Transit", "Drive south across the plateau to the subterranean city.", "Taxi", "25.7 km", "29 min", 38.545, 34.778),
-                createStop("10:29", "11:45", "1 hr 16 min", "Kaymaklı Underground City", "Cappadocia", "Kaymaklı", "Historic", "Exploration of the ancient multi-level underground refuge carved by early Christians.", "Walk/Stairs", "-", "-", 38.460, 34.752),
-                createStop("11:45", "12:30", "45 min", "Return & Light Lunch", "Cappadocia", "Uçhisar", "Lunch", "Return to Uçhisar for a light cafe lunch to recalibrate.", "Taxi", "25.7 km", "30 min", 38.630, 34.805),
-                createStop("12:30", "15:30", "3 hrs", "Hotel Rest", "Cappadocia", "Uçhisar", "Rest", "Free time to enjoy the suite's private amenities or book an in-room massage.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("15:30", "17:00", "1 hr 30 min", "Argos Wine Cellar Tasting", "Cappadocia", "Uçhisar", "Activity", "Private wine tasting inside the spectacular underground rock-carved wine cellar of the Argos hotel.", "Walk", "5 min", "5 min", 38.630, 34.805),
-                createStop("17:00", "18:00", "1 hr", "Uçhisar Castle Sunset", "Cappadocia", "Uçhisar", "Viewpoint", "A short, easy ascent to the highest point in Cappadocia for 360-degree panoramic views.", "Walk", "5 min", "5 min", 38.629, 34.805),
-                createStop("18:00", "20:00", "2 hrs", "Local Fine Dining", "Cappadocia", "Uçhisar", "Dinner", "Dinner in the village of Uçhisar, maintaining a relaxed, localized evening pace.", "Walk", "-", "-", 38.630, 34.805),
-                createStop("20:00", "20:15", "15 min", "Return to Museum Hotel", "Cappadocia", "Transit", "Transit", "Short walk or taxi back to the hotel in the village.", "Walk/Taxi", "500 m", "5 min", 38.630, 34.805)
+            { day: 10, city: "Cappadocia", zone: "Underground & Abandoned", stops: [
+                createStop("07:30", "09:00", "1h 30m", "Cave Terrace Breakfast", "Cappadocia", "Üçhisar", "🌄 Breakfast", "Day 2 watching balloons from below; slower start today.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("09:30", "10:10", "40m", "Drive to Derinkuyu", "Cappadocia", "Transit", "🚗 Transit", "40 km south of Üçhisar; private driver gives flexibility.", "Car", "40 km", "40m", 38.373, 34.735),
+                createStop("10:10", "11:15", "1h 05m", "Derinkuyu Underground City", "Cappadocia", "Derinkuyu", "🏺 UNESCO", "8 stories deep; early Christian refuge; ventilation shafts are engineering wonders.", "Walk", "-", "-", 38.373, 34.735),
+                createStop("11:30", "12:10", "40m", "Drive to Avanos", "Cappadocia", "Transit", "🚗 Transit", "Heading north to the pottery town on Red River.", "Car", "50 km", "40m", 38.715, 34.846),
+                createStop("12:10", "12:55", "45m", "Çavuşin Village (Upgraded)", "Cappadocia", "Çavuşin", "🏰 Hidden Gem", "Replaces pottery workshop. Abandoned hilltop cave village + Byzantine church; highly photogenic, zero tourists.", "Car", "5 km", "5m", 38.672, 34.840),
+                createStop("13:00", "13:55", "55m", "Lunch by Red River", "Cappadocia", "Avanos", "🍽️ Lunch", "Riverside setting; local restaurants; tarhana soup and slow-cooked meat; authentic town.", "Car", "5 km", "10m", 38.715, 34.846),
+                createStop("14:10", "14:55", "45m", "Zelve Open Air Museum", "Cappadocia", "Zelve", "🏛️ Culture", "Lesser-visited valley of abandoned cave houses; more raw than Göreme; empty of tourists.", "Car", "8 km", "15m", 38.669, 34.862),
+                createStop("15:10", "16:00", "50m", "Pigeon Valley Walk (Extended)", "Cappadocia", "Pigeon Valley", "🕊️ Valley Walk", "Extended to 2km. Flat path; carved pigeon holes in cliff face; afternoon light is ideal.", "Car", "10 km", "15m", 38.625, 34.810),
+                createStop("16:15", "17:15", "1h 00m", "Hotel Pool + Terrace Rest", "Cappadocia", "Üçhisar", "🏊 Rest", "Afternoon light on infinity pool with valley behind; rest before dinner.", "Car", "2 km", "5m", 38.630, 34.805),
+                createStop("19:30", "22:00", "2h 30m", "Nahita Restaurant (Argos)", "Cappadocia", "Üçhisar", "🍽️ Dinner", "Heritage stone building; seasonal Cappadocian cuisine; farewell to volcanic plateau.", "Walk", "1 km", "5m", 38.630, 34.805)
             ]},
-            { day: 11, city: "Cappadocia", zone: "Avanos & Chimneys", stops: [
-                createStop("09:30", "10:30", "1 hr", "Museum Hotel Breakfast", "Cappadocia", "Uçhisar", "Breakfast", "Final full day in Cappadocia begins leisurely.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("10:30", "11:00", "30 min", "Transfer to Avanos", "Cappadocia", "Transit", "Transit", "Drive to the pottery town situated on the Kızılırmak (Red River).", "Taxi", "15 km", "25 min", 38.670, 34.820),
-                createStop("11:00", "13:00", "2 hrs", "Private Pottery Workshop", "Cappadocia", "Avanos", "Activity", "Hands-on, private artisan experience with Hittite-era red clay techniques.", "Walk", "-", "-", 38.715, 34.846),
-                createStop("13:00", "14:00", "1 hr", "Riverside Lunch", "Cappadocia", "Avanos", "Lunch", "Lunch at a high-quality local restaurant overlooking the Red River.", "Walk", "5 min", "5 min", 38.715, 34.846),
-                createStop("14:00", "14:45", "45 min", "Pasabağ / Devrent Valleys", "Cappadocia", "Valleys", "Photo Stop", "Monks & Imagination Valleys. Highly concentrated fairy chimneys. Zero strenuous walking.", "Taxi", "8 km", "10 min", 38.675, 34.855),
-                createStop("14:45", "15:15", "30 min", "Return to Hotel", "Cappadocia", "Transit", "Transit", "Return for final afternoon relaxation.", "Taxi", "12 km", "20 min", 38.630, 34.805),
-                createStop("15:15", "18:30", "3 hrs 15 min", "Hotel Rest", "Cappadocia", "Uçhisar", "Rest", "Final afternoon to enjoy the cave luxury and pack for the coastal transition.", "Walk", "0 min", "0 min", 38.630, 34.805),
-                createStop("18:30", "20:30", "2 hrs", "Farewell Cappadocia Dinner", "Cappadocia", "Uçhisar", "Dinner", "A celebratory final dinner in the region.", "Walk/Taxi", "-", "-", 38.630, 34.805),
-                createStop("20:30", "20:45", "15 min", "Return to Museum Hotel", "Cappadocia", "Transit", "Transit", "Retire to the hotel to pack for the flight to Bodrum.", "Walk/Taxi", "500 m", "5 min", 38.630, 34.805)
+            { day: 11, city: "Cappadocia to Bodrum", zone: "Transit to Coast", stops: [
+                createStop("06:30", "07:30", "1h 00m", "Final Cappadocia Sunrise", "Cappadocia", "Üçhisar", "🌄 View", "Last morning with balloons; Turkish tea; photograph hotel and valley.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("07:30", "09:00", "1h 30m", "Final Breakfast + Check-Out", "Cappadocia", "Üçhisar", "🍳 Breakfast", "Savour it; say goodbye to Museum Hotel staff.", "Walk", "0 km", "0m", 38.630, 34.805),
+                createStop("09:15", "09:30", "15m", "Pigeon Valley Overlook", "Cappadocia", "Üçhisar", "📸 Photo Stop", "Best final view of Cappadocian landscape before departing for coast.", "Walk", "500 m", "5m", 38.625, 34.810),
+                createStop("09:45", "10:30", "45m", "Drive NAV Airport + Check-In", "Cappadocia", "Transit", "🚗 Transfer", "NAV is small; hotel schedules precisely.", "Car", "35 km", "35m", 38.770, 34.670),
+                createStop("11:00", "12:15", "1h 15m", "FLIGHT: NAV → IST", "Turkish Skies", "Transit", "✈️ Flight", "Short hop back to Istanbul for Bodrum connection.", "Flight", "-", "-", 41.260, 28.740),
+                createStop("12:15", "14:30", "2h 15m", "IST CIP Lounge Layover", "Istanbul", "Airport", "🛋️ Lounge", "Turkish Airlines CIP lounge; excellent food and shower facilities; rest well.", "Walk", "-", "-", 41.260, 28.740),
+                createStop("15:00", "16:15", "1h 15m", "FLIGHT: IST → BJV", "Turkish Skies", "Transit", "✈️ Flight", "Aegean coast unfolds below; colour change from terracotta to blue is dramatic.", "Flight", "-", "-", 37.250, 27.664),
+                createStop("16:15", "17:00", "45m", "BJV to Kempinski Transfer", "Bodrum", "Transit", "🚗 Transfer", "Through pine-covered hills; first sea view descends to hotel.", "Car", "35 km", "30m", 36.995, 27.567),
+                createStop("17:00", "18:30", "1h 30m", "Kempinski Hotel — Check-In", "Bodrum", "Barbaros Bay", "🏨 Hotel", "First sight of turquoise Aegean; private beach; complete register change.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("20:00", "22:00", "2h 00m", "First Bodrum Dinner", "Bodrum", "Barbaros Bay", "🍽️ Dinner", "Kempinski waterfront dining; fresh Aegean levrek; early night.", "Walk", "0 km", "0m", 36.995, 27.567)
             ]},
-            { day: 12, city: "Bodrum", zone: "Transit to Riviera", stops: [
-                createStop("07:15", "08:15", "1 hr", "Museum Hotel Check-out", "Cappadocia", "Transit", "Transit", "Morning departure to Kayseri Erkilet Airport (ASR) for the flight to Bodrum.", "VIP Van", "70 km", "1 hr", 38.770, 35.495),
-                createStop("08:40", "13:15", "4 hrs 35 min", "Flight ASR to IST to BJV", "Air", "Transit", "Flight", "Turkish Airlines Business Class routing via Istanbul for schedule reliability.", "Flight", "Var", "4h 35m", 37.250, 27.664),
-                createStop("13:15", "13:55", "40 min", "Private Resort Transfer", "Bodrum", "Transit", "Transit", "Luxury minivan transfer directly to the secluded Barbaros Bay cliffs, avoiding town traffic.", "VIP Van", "35 km", "40 min", 37.100, 27.600),
-                createStop("13:55", "18:30", "4 hrs 35 min", "Kempinski Check-in", "Bodrum", "Barbaros Bay", "Check-in", "Check-in to the premium coastal resort. Time to decompress and enjoy the private balcony.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("18:30", "21:00", "2 hrs 30 min", "Kitchen by Osman Sezener", "Bodrum", "Barbaros Bay", "Dinner", "1-Michelin-Star dining showcasing modern Anatolian coastal cuisine. Exceptional culinary introduction.", "Walk", "0 min", "0 min", 36.995, 27.567, true),
-                createStop("21:00", "21:15", "15 min", "Return to Suite", "Bodrum", "Barbaros Bay", "Rest", "Retire to the Kempinski suite.", "Walk", "0 km", "5 min", 36.995, 27.567)
+            { day: 12, city: "Bodrum", zone: "Gulet & Michelin", stops: [
+                createStop("08:30", "10:00", "1h 30m", "Late Terrace Breakfast", "Bodrum", "Barbaros Bay", "🌊 Breakfast", "Bodrum pace is slower, warmer; eat overlooking bay; pomegranate juice.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("10:00", "10:30", "30m", "Prepare for Gulet", "Bodrum", "Marina", "⛵ Prep", "Hotel packages sunscreen, towels, cooler of wine and mezes.", "Walk", "500 m", "10m", 36.995, 27.567),
+                createStop("10:30", "14:00", "3h 30m", "Private Gulet Charter", "Bodrum", "Peninsula", "⛵ SIGNATURE", "Explore secret coves; Aquarium Bay; crystal clear water; champagne on boat; pure Aegean luxury.", "Gulet", "-", "-", 37.032, 27.426),
+                createStop("14:00", "15:30", "1h 30m", "Lunch on Board", "Bodrum", "Bay", "🥗 Lunch", "Cold meze, grilled fish, Aegean white wine; only dress code is swimsuit.", "Gulet", "-", "-", 37.032, 27.426),
+                createStop("16:00", "17:30", "1h 30m", "Spa Treatment (Upgraded)", "Bodrum", "Barbaros Bay", "💆 Spa", "Pushed 30 mins for proper post-boat transition. Kempinski full body treatment for two; heated pool.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("17:45", "19:15", "1h 30m", "Hotel Terrace Sundowner", "Bodrum", "Barbaros Bay", "🌅 Sundowner", "Golden hour over Aegean; G&T or rakı; light on water is extraordinary.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("20:00", "22:30", "2h 30m", "Kitchen by Osman Sezener ★", "Bodrum", "Bodrum Town", "⭐ MICHELIN", "Bodrum's leading Michelin restaurant; modern Aegean + Anatolian; tasting menu; Bodrum at gastronomic finest.", "Taxi", "15 km", "25m", 37.032, 27.426, true)
             ]},
-            { day: 13, city: "Bodrum", zone: "Yacht & Marina", stops: [
-                createStop("09:00", "10:00", "1 hr", "Kempinski Resort Breakfast", "Bodrum", "Barbaros Bay", "Breakfast", "Breakfast on the outdoor terrace overlooking the Aegean Sea.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("10:00", "14:00", "4 hrs", "Private Motor Yacht Charter", "Bodrum", "Peninsula", "Activity", "4-hour luxury motor yacht charter navigating hidden coves. Catered champagne lunch on board.", "Yacht", "Var", "-", 37.032, 27.426),
-                createStop("14:00", "14:40", "40 min", "Transfer to Yalıkavak", "Bodrum", "Transit", "Transit", "Transfer from the charter drop-off to the premier luxury hub of the peninsula.", "VIP Van", "25 km", "40 min", 37.060, 27.350),
-                createStop("14:40", "18:00", "3 hrs 20 min", "Yalıkavak Marina Shopping", "Bodrum", "Yalıkavak", "Shopping", "Final major shopping block at Turkey's most glamorous mega-yacht marina. Dior, Louis Vuitton, Prada.", "Walk", "-", "-", 37.106, 27.283),
-                createStop("18:00", "18:45", "45 min", "Transfer to Türkbükü", "Bodrum", "Transit", "Transit", "Scenic coastal drive to the exclusive Türkbükü bay.", "Taxi", "15 km", "30 min", 37.120, 27.330),
-                createStop("18:45", "21:30", "2 hrs 45 min", "Maçakızı Restaurant", "Bodrum", "Türkbükü", "Dinner", "1-Michelin-Star dining at the cult-status hotel. Exceptional Aegean seafood and elite people-watching.", "Walk", "0 min", "0 min", 37.135, 27.388, true),
-                createStop("21:30", "22:15", "45 min", "Return to Kempinski Resort", "Bodrum", "Transit", "Transit", "Late evening return to the serenity of the Kempinski.", "VIP Van", "40 km", "45 min", 36.995, 27.567)
+            { day: 13, city: "Bodrum", zone: "Town & Sunset Route", stops: [
+                createStop("08:30", "09:30", "1h 00m", "Hotel Breakfast", "Bodrum", "Barbaros Bay", "🥐 Breakfast", "Slower morning; Bodrum town and Gümüşlük today.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("09:30", "10:15", "45m", "Drive Bodrum Town", "Bodrum", "Transit", "🚗 Transit", "Historic centre of peninsula; drive along coastline reveals harbor.", "Car", "15 km", "30m", 37.032, 27.426),
+                createStop("10:15", "11:15", "1h 00m", "Bodrum Castle (St Peter's)", "Bodrum", "Bodrum Town", "🏰 Culture", "15th-century Crusader castle; Museum of Underwater Archaeology; Uluburun shipwreck.", "Walk", "-", "-", 37.031, 27.428),
+                createStop("11:20", "13:00", "1h 40m", "Boutique Shopping + Marina", "Bodrum", "Bodrum Town", "🛍️ Shopping", "Begüm Khan accessories; handmade sandals; marina promenade walk.", "Walk", "-", "-", 37.034, 27.427),
+                createStop("13:00", "14:15", "1h 15m", "Meyhane Lunch", "Bodrum", "Bodrum Town", "🐟 Lunch", "Meze ritual: octopus, calamari, rakı; do not rush.", "Walk", "500 m", "10m", 37.034, 27.427),
+                createStop("14:15", "15:30", "1h 15m", "Continue Artisan Shopping", "Bodrum", "Bodrum Town", "🛍️ Shopping", "Streets behind castle; handmade sandal workshops (custom made).", "Walk", "-", "-", 37.034, 27.427),
+                createStop("15:45", "16:15", "30m", "Drive Gümüşlük (Direct)", "Bodrum", "Transit", "🚗 Transit", "Route fixed: direct from Bodrum Town to Gümüşlük.", "Car", "20 km", "30m", 37.058, 27.234),
+                createStop("16:15", "17:45", "1h 30m", "Gümüşlük — Rabbit Island", "Bodrum", "Gümüşlük", "🌅 Hidden Gem", "Shallow causeway to Rabbit Island; sunset over Kos Island; quietly beautiful.", "Walk", "-", "-", 37.058, 27.234),
+                createStop("18:00", "19:45", "1h 45m", "Drive to Maçakızı (Direct)", "Bodrum", "Transit", "🚗 Transit", "Route fixed: direct from Gümüşlük to Maçakızı without hotel detour. Saves 70 mins.", "Car", "20 km", "25m", 37.135, 27.388),
+                createStop("20:00", "22:30", "2h 30m", "Maçakızı Restaurant ★", "Bodrum", "Türkbükü", "⭐ MICHELIN", "Iconic Maçakızı; Michelin-starred Aegean cuisine; bold Turkish blue and white design.", "Walk", "0 km", "0m", 37.135, 27.388, true),
+                createStop("22:30", "23:30", "1h 00m", "Return to Kempinski", "Bodrum", "Transit", "🚗 Return", "Night drive through pine-forested hills.", "Taxi", "35 km", "40m", 36.995, 27.567)
             ]},
-            { day: 14, city: "Bodrum", zone: "Decompression", stops: [
-                createStop("10:00", "11:00", "1 hr", "Kempinski Resort Breakfast", "Bodrum", "Barbaros Bay", "Breakfast", "Final full day entirely dedicated to decompression.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("11:00", "15:00", "4 hrs", "Kempinski Private Beach", "Bodrum", "Barbaros Bay", "Rest", "Exclusive access to the private sandy beach and infinity pool. Reserved luxury cabanas.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("15:00", "18:00", "3 hrs", "Premium Spa Experience", "Bodrum", "Barbaros Bay", "Activity", "Extensive spa afternoon featuring couples' massages and hydrotherapy. Physical reset.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("18:00", "21:00", "3 hrs", "Resort Fine Dining", "Bodrum", "Barbaros Bay", "Dinner", "A relaxed, elegant farewell dinner on the property, eliminating transit on the final evening.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("21:00", "21:15", "15 min", "Return to Suite", "Bodrum", "Barbaros Bay", "Rest", "Final night in Turkey. Retire to suite.", "Walk", "0 km", "5 min", 36.995, 27.567)
+            { day: 14, city: "Bodrum", zone: "Beach Club Finale", stops: [
+                createStop("09:00", "10:30", "1h 30m", "Leisurely Final Breakfast", "Bodrum", "Barbaros Bay", "🌊 Breakfast", "No schedule pressure today; late breakfast on terrace.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("10:30", "11:30", "1h 00m", "Final Hotel Beach + Pool", "Bodrum", "Barbaros Bay", "🏊 Swim", "Last swim in Aegean; warm September water; pure luxury.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("12:00", "12:35", "35m", "Drive Türkbükü Village", "Bodrum", "Transit", "🚗 Transit", "Bodrum's most exclusive village — St Tropez of Turkey.", "Car", "30 km", "35m", 37.135, 27.388),
+                createStop("12:30", "16:30", "4h 00m", "Maki/Ada Beach Club", "Bodrum", "Türkbükü", "🏖️ Beach Club", "Reserved sunbeds; cocktails, meze; sophisticated summering society; Bodrum lifestyle at its purest.", "Walk", "0 km", "0m", 37.135, 27.388),
+                createStop("16:30", "17:30", "1h 00m", "Drive Back to Hotel", "Bodrum", "Transit", "🚗 Return", "Return; final shower.", "Car", "30 km", "35m", 36.995, 27.567),
+                createStop("18:00", "19:00", "1h 00m", "Final Aegean Sunset", "Bodrum", "Barbaros Bay", "🌅 Sunset", "Hotel terrace; rakı or G&T; reflect on 14 nights in Turkey.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("20:00", "22:30", "2h 30m", "Orfoz — Farewell Dinner (Upgraded)", "Bodrum", "Bodrum Town", "🍽️ Farewell Dinner", "Committed farewell dinner. Bodrum institution; strong local seafood; authentic coastal character.", "Taxi", "15 km", "30m", 37.032, 27.426)
             ]},
-            { day: 15, city: "Departure", zone: "Transit to KUL", stops: [
-                createStop("10:00", "11:30", "1 hr 30 min", "Kempinski Breakfast & Pack", "Bodrum", "Barbaros Bay", "Rest", "Final breakfast and packing sequence.", "Walk", "0 min", "0 min", 36.995, 27.567),
-                createStop("11:30", "12:10", "40 min", "Airport VIP Transfer", "Bodrum", "Transit", "Transit", "Private transfer back to Milas-Bodrum Airport.", "VIP Van", "35 km", "40 min", 37.250, 27.664),
-                createStop("12:10", "16:20", "4 hrs 10 min", "Flight BJV to IST", "Air", "Transit", "Flight", "Turkish Airlines Domestic connection routing back to Istanbul Airport (IST).", "Flight", "500 km", "1 hr 15m", 41.260, 28.740),
-                createStop("16:20", "19:35", "3 hrs 15 min", "Emirates Lounge & Duty-Free", "Istanbul", "Airport", "Transit", "Final luxury shopping in IST's extensive retail concourse, followed by relaxation in the premium lounge.", "Walk", "-", "-", 41.260, 28.740),
-                createStop("19:35", "14:25", "13 hrs 50m", "Emirates EK First Class", "Air", "Transit", "Flight", "Overnight long-haul return via Dubai (DXB) in Emirates First Class, arriving in Kuala Lumpur.", "Flight", "8000 km", "13h 50m", 3.140, 101.686)
+            { day: 15, city: "Bodrum", zone: "Departure", stops: [
+                createStop("08:00", "09:30", "1h 30m", "Final Breakfast + Check-Out", "Bodrum", "Barbaros Bay", "🥐 Breakfast", "Photograph bay and hotel one final time.", "Walk", "0 km", "0m", 36.995, 27.567),
+                createStop("09:30", "10:15", "45m", "Private Car to BJV", "Bodrum", "Transit", "🚗 Transfer", "BJV is small and efficient.", "Car", "35 km", "35m", 37.250, 27.664),
+                createStop("11:00", "12:15", "1h 15m", "FLIGHT: BJV → IST", "Turkish Skies", "Transit", "✈️ Flight", "Final domestic hop to Istanbul.", "Flight", "-", "-", 41.260, 28.740),
+                createStop("12:15", "22:30", "10h 15m", "IST Lounge & Duty-Free", "Istanbul", "Airport", "🛋️ Lounge", "Emirates First Class check-in; Turkish CIP lounge; final Turkish coffee.", "Walk", "-", "-", 41.260, 28.740),
+                createStop("23:00", "14:25", "11h", "FLIGHT: IST → DXB → KUL", "Skies", "Transit", "✈️ Flight", "Emirates First Class suite; DXB layover at Al Maha; arrive KUL Sep 20. 14 extraordinary nights complete.", "Flight", "-", "-", 3.140, 101.686)
             ]}
         ];
 
         const hotelsData = [
-            { name: "Çırağan Palace Kempinski", location: "Istanbul", nights: 7, dates: "Sep 14 - Sep 21", price: "$10,500", desc: "The only Ottoman imperial palace hotel on the Bosphorus. Palace Bosphorus Suite.", img: "https://images.unsplash.com/photo-1542314831-c6a4d14fff88?auto=format&fit=crop&w=800&q=80" },
-            { name: "Museum Hotel", location: "Cappadocia", nights: 4, dates: "Sep 21 - Sep 25", price: "$11,520", desc: "Relais & Châteaux property in Uçhisar. Imperial Pool Suite with private plunge pool.", img: "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80" },
-            { name: "Kempinski Barbaros Bay", location: "Bodrum", nights: 3, dates: "Sep 25 - Sep 28", price: "$3,600", desc: "Decompression finale with private cliffside bay and Thalasso spa.", img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80" }
+            { name: "Çırağan Palace Kempinski", location: "Istanbul", nights: 7, dates: "Sep 5 - Sep 12", price: "$6,300", desc: "The only Ottoman imperial palace hotel on the Bosphorus. Palace Bosphorus Suite.", img: "https://images.unsplash.com/photo-1542314831-c6a4d14fff88?auto=format&fit=crop&w=800&q=80" },
+            { name: "Museum Hotel", location: "Cappadocia", nights: 4, dates: "Sep 12 - Sep 16", price: "$2,400", desc: "Relais & Châteaux property in Uçhisar. Cave suite carved into volcanic rock.", img: "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80" },
+            { name: "Kempinski Barbaros Bay", location: "Bodrum", nights: 3, dates: "Sep 16 - Sep 19", price: "$2,100", desc: "Decompression finale with private cliffside bay and Thalasso spa.", img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80" }
         ];
 
         let defaultBudgetLedger = [
-            { day: "1-15", item: "Emirates First Class & Domestic", amount: 15200, paidBy: "Joe", category: "Transit" },
-            { day: "1-8", item: "Çırağan Palace (7 Nights)", amount: 10500, paidBy: "Joe", category: "Hotel" },
-            { day: "8-12", item: "Museum Hotel (4 Nights)", amount: 11520, paidBy: "Joe", category: "Hotel" },
-            { day: "12-15", item: "Kempinski Barbaros Bay (3 Nts)", amount: 3600, paidBy: "Joe", category: "Hotel" },
-            { day: "1-15", item: "Luxury Retail Allowance", amount: 15000, paidBy: "Joe", category: "Shopping" },
-            { day: "1-15", item: "Michelin Dining (TURK, Mikla, etc)", amount: 3100, paidBy: "Joe", category: "Food" },
-            { day: "1-15", item: "Other Food & Cafes", amount: 1200, paidBy: "Sonia", category: "Food" },
-            { day: "1-15", item: "VIP Transit & Taxis", amount: 1500, paidBy: "Sonia", category: "Transit" },
-            { day: "1-15", item: "Nightlife & Bars", amount: 1000, paidBy: "Sonia", category: "Activity" },
-            { day: "1-15", item: "Misc Activities (Yacht, Balloon)", amount: 4400, paidBy: "Sonia", category: "Activity" }
+            { day: "1-15", item: "Emirates First Class (2x)", amount: 24000, paidBy: "Joe", category: "Transit" },
+            { day: "1-15", item: "Domestic Flights (4 legs x 2)", amount: 900, paidBy: "Joe", category: "Transit" },
+            { day: "1-8", item: "Çırağan Palace (7 Nights)", amount: 6300, paidBy: "Joe", category: "Hotel" },
+            { day: "8-12", item: "Museum Hotel (4 Nights)", amount: 2400, paidBy: "Joe", category: "Hotel" },
+            { day: "12-15", item: "Kempinski Barbaros Bay (3 Nts)", amount: 2100, paidBy: "Joe", category: "Hotel" },
+            { day: "1-15", item: "Michelin Dining (6 meals)", amount: 3600, paidBy: "Joe", category: "Food" },
+            { day: "1-15", item: "Other Food & Cafes", amount: 3800, paidBy: "Sonia", category: "Food" },
+            { day: "1-15", item: "Luxury Shopping Baseline", amount: 6000, paidBy: "Joe", category: "Shopping" },
+            { day: "9", item: "Private Hot Air Balloon", amount: 600, paidBy: "Sonia", category: "Activity" },
+            { day: "6", item: "Private Bosphorus Cruise", amount: 500, paidBy: "Sonia", category: "Activity" },
+            { day: "12", item: "Private Gulet (Bodrum)", amount: 700, paidBy: "Sonia", category: "Activity" },
+            { day: "1-15", item: "Nightlife, Bars & Misc", amount: 1400, paidBy: "Sonia", category: "Activity" },
+            { day: "1-15", item: "Hammam, Spa & Entry Fees", amount: 800, paidBy: "Sonia", category: "Activity" }
         ];
 
         let budgetLedger = [...defaultBudgetLedger];
 
         const weatherData = {
-            1: { tempDay: "25°C", tempNight: "18°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm arrival in Istanbul.", wear: "Smart Casual." },
-            2: { tempDay: "24°C", tempNight: "17°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Perfect historic touring.", wear: "Comfortable chic." },
+            1: { tempDay: "26°C", tempNight: "18°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm arrival in Istanbul.", wear: "Smart Casual." },
+            2: { tempDay: "25°C", tempNight: "17°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Perfect historic touring.", wear: "Comfortable chic." },
             3: { tempDay: "26°C", tempNight: "18°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm retail day.", wear: "Designer casual." },
             4: { tempDay: "25°C", tempNight: "17°C", condition: "Partly Cloudy", iconDay: "cloud-sun", iconNight: "cloud-moon", desc: "Mild afternoon.", wear: "Walking shoes." },
             5: { tempDay: "24°C", tempNight: "16°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Crisp Bosphorus breeze.", wear: "Light Jacket for Yacht." },
@@ -539,47 +569,31 @@
         const loadState = () => {
             try {
                 // Progress State
-                const p = localStorage.getItem('elite_progress_2026'); 
+                const p = localStorage.getItem('elite_progress_2026_master'); 
                 if (p) { const parsed = JSON.parse(p); itinerary.forEach((day, d) => { day.stops.forEach((s, si) => { if (parsed[d] && parsed[d][si] !== undefined) s.completed = parsed[d][si]; }); }); }
                 
-                // Budget State (Full Array mapping)
-                const b = localStorage.getItem('elite_budget_v2');
-                if (b) {
-                    budgetLedger = JSON.parse(b);
-                } else {
-                    // Fallback to V1 logic if updating from older version
-                    const old_b = localStorage.getItem('elite_budget_2026');
-                    if (old_b) {
-                        JSON.parse(old_b).forEach((tx, i) => { if (budgetLedger[i]) { budgetLedger[i].amount = tx.amount; budgetLedger[i].paidBy = tx.paidBy; } });
-                        saveBudgetState(); // Migrate to v2
-                    }
-                }
+                // Budget State
+                const b = localStorage.getItem('elite_budget_v3_master');
+                if (b) { budgetLedger = JSON.parse(b); }
             } catch(e) {}
         };
-        const saveBudgetState = () => { try { localStorage.setItem('elite_budget_v2', JSON.stringify(budgetLedger)); } catch(e) {} };
-        const saveProgressState = () => { try { localStorage.setItem('elite_progress_2026', JSON.stringify(itinerary.map(day => day.stops.map(s => s.completed)))); } catch(e) {} };
+        const saveBudgetState = () => { try { localStorage.setItem('elite_budget_v3_master', JSON.stringify(budgetLedger)); } catch(e) {} };
+        const saveProgressState = () => { try { localStorage.setItem('elite_progress_2026_master', JSON.stringify(itinerary.map(day => day.stops.map(s => s.completed)))); } catch(e) {} };
 
         const fetchExchangeRate = async () => {
             const label = document.getElementById('exchange-rate-label');
-            
             try {
-                // Fetching live data from Open Exchange Rates API
                 const r = await fetch('https://open.er-api.com/v6/latest/USD');
                 const d = await r.json(); 
-                
                 if (d?.rates?.MYR) { 
                     USD_TO_MYR = d.rates.MYR; 
                     label.innerHTML = `<i data-lucide="check-circle" class="w-3 h-3 text-success"></i> <span class="text-success">Live: 1 USD = ${USD_TO_MYR.toFixed(2)} MYR</span>`;
                     label.classList.add('bg-success/10', 'border-success/20');
                     label.classList.remove('bg-white/5', 'border-white/10');
-                } else {
-                    throw new Error("Rate not found in API response");
-                }
+                } else throw new Error("Rate not found");
             } catch (e) {
-                console.error("Exchange rate sync failed, using fallback:", e);
                 label.innerHTML = `<i data-lucide="wifi-off" class="w-3 h-3"></i> Offline: 1 USD = ${USD_TO_MYR.toFixed(2)} MYR`;
             }
-            
             lucide.createIcons();
             updateBudgetTotals();
         };
@@ -607,7 +621,6 @@
         const toggleAllDaysMap = () => {
             haptic('light');
             showAllDaysMap = !showAllDaysMap;
-            
             const btn = document.getElementById('btn-all-days');
             if (showAllDaysMap) {
                 btn.classList.add('bg-accent/20', 'text-accent', 'border-accent/50');
@@ -616,7 +629,6 @@
                 btn.classList.remove('bg-accent/20', 'text-accent', 'border-accent/50');
                 btn.classList.add('bg-black/80', 'text-white', 'border-white/10');
             }
-            
             if(mapInstance) updateMap(currentDayIndex);
         };
 
@@ -624,13 +636,7 @@
         const togglePayer = (index) => { haptic('light'); budgetLedger[index].paidBy = (budgetLedger[index].paidBy === 'Joe' ? 'Sonia' : 'Joe'); saveBudgetState(); renderBudget(); };
         const updateAmount = (index, val) => { budgetLedger[index].amount = parseFloat(val) || 0; saveBudgetState(); updateBudgetTotals(); };
         const toggleCategory = (cat) => { haptic('light'); if (expandedCategories.has(cat)) expandedCategories.delete(cat); else expandedCategories.add(cat); renderBudget(); };
-        
-        const deleteBudgetItem = (index) => {
-            haptic('light');
-            budgetLedger.splice(index, 1);
-            saveBudgetState();
-            renderBudget();
-        }
+        const deleteBudgetItem = (index) => { haptic('light'); budgetLedger.splice(index, 1); saveBudgetState(); renderBudget(); }
 
         const updateBudgetTotals = () => {
             let totalUSD = 0, joeUSD = 0, soniaUSD = 0;
@@ -639,17 +645,12 @@
                 if(tx.paidBy === 'Sonia') soniaUSD += tx.amount; 
                 else joeUSD += tx.amount;
             });
-            
-            globalTotalUSD = totalUSD; // Update global for category bars
-
+            globalTotalUSD = totalUSD; 
             document.getElementById('budget-total').innerText = `$${totalUSD.toLocaleString()}`;
             document.getElementById('budget-total-myr').innerText = `≈ RM ${(totalUSD * USD_TO_MYR).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
             document.getElementById('budget-owed').innerText = `RM ${(soniaUSD * USD_TO_MYR).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-            
-            // Update Progress Bar
             const joePct = totalUSD > 0 ? Math.round((joeUSD / totalUSD) * 100) : 50;
             const soniaPct = totalUSD > 0 ? Math.round((soniaUSD / totalUSD) * 100) : 50;
-            
             document.getElementById('joe-bar').style.width = `${joePct}%`;
             document.getElementById('sonia-bar').style.width = `${soniaPct}%`;
             document.getElementById('joe-pct').innerText = `Joe ${joePct}%`;
@@ -659,31 +660,22 @@
         const renderBudget = () => {
             const container = document.getElementById('budget-ledger');
             const grouped = {};
-            // Group by category, preserve original index for editing
             budgetLedger.forEach((tx, idx) => { 
                 if (!grouped[tx.category]) grouped[tx.category] = { total: 0, items: [] }; 
                 grouped[tx.category].total += tx.amount; 
                 grouped[tx.category].items.push({ ...tx, originalIndex: idx }); 
             });
-            
             let html = '';
             const icons = { 'Hotel': 'bed', 'Food': 'utensils', 'Transit': 'car', 'Shopping': 'shopping-bag', 'Activity': 'activity' };
-            
-            // Sort categories to keep UI consistent
             const categoryOrder = ['Hotel', 'Transit', 'Food', 'Shopping', 'Activity'];
             const sortedCategories = Object.keys(grouped).sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b));
 
             sortedCategories.forEach(cat => {
                 const data = grouped[cat];
                 const isEx = expandedCategories.has(cat);
-                
-                // Calculate percentage of total budget for the progress bar
                 const catPct = globalTotalUSD > 0 ? (data.total / globalTotalUSD) * 100 : 0;
-
                 html += `<div class="bg-card rounded-[1.25rem] border border-white/5 mb-3 overflow-hidden shadow-lg transition-all relative">
-                    <!-- UPGRADE 3: Category Visual Bar -->
                     <div class="absolute top-0 left-0 h-1 bg-accent/50 z-10 transition-all duration-1000" style="width: ${catPct}%"></div>
-                    
                     <button onclick="toggleCategory('${cat}')" class="w-full flex items-center justify-between p-4 focus:outline-none transition-colors hover:bg-white/5 relative z-20">
                         <div class="flex items-center gap-3">
                             <div class="bg-[#1a1a1a] p-2.5 rounded-full text-accent border border-white/5 shadow-inner">
@@ -701,7 +693,6 @@
                     </button>
                     <div class="${isEx ? 'block' : 'hidden'} border-t border-white/5 bg-[#0a0a0a] p-2.5 relative z-20">
                         <div class="space-y-2">`;
-                
                 data.items.forEach(tx => { 
                     html += `
                         <div class="bg-[#121212] p-2.5 rounded-xl flex items-center justify-between border border-white/5 gap-2 shadow-sm relative group">
@@ -729,17 +720,12 @@
             });
             container.innerHTML = html; 
             lucide.createIcons(); 
-            // Don't call updateBudgetTotals here to prevent infinite loop.
-            // It is called in init.
         };
 
-        // --- MODAL FUNCTIONS ---
         const openBudgetModal = () => {
             haptic('light');
             const modal = document.getElementById('add-budget-modal');
             modal.classList.remove('hidden');
-            
-            // Allow the display to update before triggering the fade-in animation
             setTimeout(() => {
                 modal.classList.remove('opacity-0', 'pointer-events-none');
                 document.getElementById('add-budget-content').classList.remove('scale-95');
@@ -750,11 +736,8 @@
             const modal = document.getElementById('add-budget-modal');
             modal.classList.add('opacity-0', 'pointer-events-none');
             document.getElementById('add-budget-content').classList.add('scale-95');
-            
-            // Wait for the fade-out animation to finish before hiding completely
             setTimeout(() => {
                 modal.classList.add('hidden');
-                // Reset fields
                 document.getElementById('new-budget-name').value = '';
                 document.getElementById('new-budget-amount').value = '';
                 selectModalPayer('Joe');
@@ -778,16 +761,12 @@
             const name = document.getElementById('new-budget-name').value.trim() || 'Custom Expense';
             const amount = parseFloat(document.getElementById('new-budget-amount').value) || 0;
             const category = document.getElementById('new-budget-category').value;
-            const day = currentDayIndex + 1; // Default to current selected day in itinerary
-            
+            const day = currentDayIndex + 1; 
             budgetLedger.push({ day: `${day}`, item: name, amount: amount, paidBy: currentModalPayer, category: category });
-            
-            // Auto expand the category where it was added
             expandedCategories.add(category);
-            
             saveBudgetState();
-            updateBudgetTotals(); // Update totals first
-            renderBudget();       // Then render with new percentages
+            updateBudgetTotals(); 
+            renderBudget();       
             closeBudgetModal();
             haptic('success');
         };
@@ -812,13 +791,10 @@
 
         const updateMap = (idx) => {
             if (!mapInstance) return; markersLayer.clearLayers(); polylineLayer.clearLayers();
-            
             if (showAllDaysMap) {
                 document.getElementById('map-day-label').innerText = `ALL DAYS`;
                 const allLls = [];
-                // Distinct colors to show the progression between days
                 const dayColors = ['#D4AF37', '#ec4899', '#3b82f6', '#10b981', '#a855f7', '#f97316', '#06b6d4', '#f43f5e', '#14b8a6', '#8b5cf6'];
-                
                 itinerary.forEach((d, dayIdx) => {
                     const dayLls = [];
                     const color = dayColors[dayIdx % dayColors.length];
@@ -829,7 +805,7 @@
                             const mk = L.marker([s.lat, s.lng], { 
                                 icon: L.divIcon({ 
                                     className: (s.completed ? 'custom-marker completed-marker' : 'custom-marker'), 
-                                    html: `${d.day}.${si + 1}`, // Shows Day.Stop format
+                                    html: `${d.day}.${si + 1}`,
                                     iconSize: [22, 22], 
                                     iconAnchor: [11, 11] 
                                 }) 
@@ -837,11 +813,8 @@
                             mk.setZIndexOffset((s.completed ? 100 : 1000) - si);
                         }
                     });
-                    if (dayLls.length > 1) { 
-                        L.polyline(dayLls, {color: color, weight: 2, opacity: 0.8, dashArray: '4, 4'}).addTo(polylineLayer); 
-                    }
+                    if (dayLls.length > 1) { L.polyline(dayLls, {color: color, weight: 2, opacity: 0.8, dashArray: '4, 4'}).addTo(polylineLayer); }
                 });
-                
                 if (allLls.length > 0) {
                     const bounds = L.polyline(allLls).getBounds();
                     mapInstance.flyToBounds(bounds, { padding: [50, 50], duration: 1.2 }); 
@@ -858,12 +831,10 @@
                 });
                 if (lls.length > 1) { 
                     const pl = L.polyline(lls, {color: '#D4AF37', weight: 2.5, opacity: 0.8, dashArray: '6, 6'}).addTo(polylineLayer); 
-                    // UPGRADE 4: Smooth map flying transitions instead of snappy fitBounds
                     mapInstance.flyToBounds(pl.getBounds(), { padding: [50, 50], duration: 1.2 }); 
                 }
                 else if (lls.length === 1) mapInstance.flyTo(lls[0], 14, {duration: 1.2});
             }
-            
             lucide.createIcons();
         };
 
@@ -895,15 +866,12 @@
         const selectDay = (i) => { 
             haptic('light'); 
             currentDayIndex = i; 
-            
-            // Auto-disable All Days mode when selecting a specific day
             showAllDaysMap = false;
             const btn = document.getElementById('btn-all-days');
             if(btn) {
                 btn.classList.remove('bg-accent/20', 'text-accent', 'border-accent/50');
                 btn.classList.add('bg-black/80', 'text-white', 'border-white/10');
             }
-            
             buildDaySelector(); renderCards(); updateProgressUI(); if (mapInstance) updateMap(i); 
         };
 
@@ -918,7 +886,7 @@
                             <div class="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/5 whitespace-nowrap shadow-sm"><i data-lucide="clock" class="w-3 h-3 text-accent"></i><span class="text-[10px] font-mono font-semibold text-white/90">${s.start}-${s.end}</span></div>
                             <div class="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/5 whitespace-nowrap shadow-sm"><i data-lucide="activity" class="w-3 h-3 text-accent"></i><span class="text-[9px] font-bold text-white/90 uppercase tracking-widest">${s.activity}</span></div>
                         </div>
-                        <h2 class="text-2xl font-bold text-white mb-1.5 leading-tight tracking-tight">${s.location}</h2><p class="text-[11px] text-white/70 leading-relaxed mb-4 line-clamp-2">${s.desc}</p>
+                        <h2 class="text-2xl font-bold text-white mb-1.5 leading-tight tracking-tight">${s.location}</h2><p class="text-[11px] text-white/70 leading-relaxed mb-4 line-clamp-3">${s.desc}</p>
                         <div class="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-3.5 flex flex-col gap-3 mt-auto shadow-xl">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
@@ -991,8 +959,8 @@
             const istEl = document.getElementById('clock-ist');
             const cdEl = document.getElementById('countdown-timer');
             
-            // Trip Start Date: Sep 14, 2026
-            const targetDate = new Date('2026-09-14T00:00:00Z').getTime();
+            // Trip Start Date: Sep 5, 2026
+            const targetDate = new Date('2026-09-05T00:00:00Z').getTime();
 
             setInterval(() => {
                 const now = new Date();
@@ -1009,7 +977,7 @@
                     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     cdEl.innerText = `${days}d ${hours}h ${minutes}m`;
                 } else {
-                    cdEl.innerText = "IN PROGRESS";
+                    cdEl.innerText = "TRIP STARTED";
                     cdEl.classList.add('text-success');
                 }
             }, 1000);
@@ -1017,7 +985,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loadState(); 
-            updateBudgetTotals(); // Initial calculation
+            updateBudgetTotals();
             renderBudget(); 
             fetchExchangeRate(); 
             buildDaySelector(); 
