@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Luxury Turkey Itinerary 2026</title>
+    
+    <!-- iOS Native App (PWA) Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Elite Route">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#050505">
+    
+    <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=512&h=512&q=80">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        dark: '#050505',
+                        card: '#121212',
+                        accent: '#D4AF37',
+                        joe: '#3b82f6',
+                        sonia: '#ec4899',
+                        success: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050505; color: #ffffff; overflow: hidden; overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; height: 100dvh; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .view-wrapper { position: absolute; inset: 0; padding-top: env(safe-area-inset-top); padding-bottom: calc(85px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; }
+        .scroll-deck { flex: 1; min-height: 0; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; align-items: center; padding: 1rem 0; }
+        .card-wrapper { width: 100vw; height: 100%; flex-shrink: 0; scroll-snap-align: center; padding: 0 1.25rem; display: flex; align-items: center; justify-content: center; }
+        .card-inner { width: 100%; max-width: 400px; height: 100%; max-height: 600px; position: relative; border-radius: 2rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.25rem; background-color: #121212; }
+
+        .glass-panel { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 1px solid rgba(255,255,255,0.08); padding-bottom: env(safe-area-inset-bottom); height: calc(85px + env(safe-area-inset-bottom)); }
+        .tab-content { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .tab-content.active { display: flex; opacity: 1; animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .day-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .day-btn.active { background-color: #D4AF37; color: #000; font-weight: 700; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35); border-color: transparent; }
+
+        .custom-marker { background-color: #D4AF37; border: 2px solid #121212; border-radius: 50%; box-shadow: 0 0 12px rgba(212, 175, 55, 0.6); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #121212; transition: all 0.3s ease;}
+        .custom-marker.completed-marker { background-color: #374151; border-color: #1f2937; color: #9ca3af; box-shadow: none; opacity: 0.8; }
+        
+        .budget-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; width: 80px; text-align: right; border-radius: 8px; padding: 4px 8px; font-weight: 600; transition: all 0.2s; }
+        .budget-input:focus { outline: none; border-color: #D4AF37; background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2); }
+        
+        /* Form Inputs */
+        .form-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0.75rem; padding: 0.75rem 1rem; width: 100%; transition: all 0.2s; }
+        .form-input:focus { outline: none; border-color: #D4AF37; background: rgba(255,255,255,0.08); }
+        .form-select { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; }
+
+        /* Animation for map paths */
+        .leaflet-interactive { transition: stroke-dashoffset 1s ease-in-out; }
+    </style>
+</head>
+<body class="flex flex-col antialiased">
+
+    <!-- Modal: Add Budget Item -->
+    <div id="add-budget-modal" class="hidden fixed inset-0 z-[200] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none">
+        <div id="add-budget-content" class="bg-[#121212] border border-white/10 rounded-[2rem] w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-all duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white tracking-tight">New Expense</h3>
+                <button onclick="closeBudgetModal()" class="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors"><i data-lucide="x" class="w-4 h-4 text-textMuted"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-[10px] text-textMuted uppercase font-bold tracking-wider mb-1.5 ml-1">Expense Name</label>
+                    <input type="text" id="new-budget-name" placeholder="e.g., Grand Bazaar Carpets" class="form-input text-sm">
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="block text-[10px] text-textMuted uppercase font-bold tracking-wider mb-1.5 ml-1">Amount (USD)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-textMuted font-medium">$</span>
+                            <input type="number" id="new-budget-amount" placeholder="0" class="form-input text-sm pl-8">
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-[10px] text-textMuted uppercase font-bold tracking-wider mb-1.5 ml-1">Category</label>
+                        <select id="new-budget-category" class="form-input form-select text-sm">
+                            <option value="Hotel">Hotel</option>
+                            <option value="Food">Food</option>
+                            <option value="Transit">Transit</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Activity">Activity</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] text-textMuted uppercase font-bold tracking-wider mb-2 ml-1">Paid By</label>
+                    <div class="flex bg-white/5 p-1 rounded-xl border border-white/5">
+                        <button type="button" id="payer-joe" onclick="selectModalPayer('Joe')" class="flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-lg bg-joe text-white shadow-md transition-all">Joe</button>
+                        <button type="button" id="payer-sonia" onclick="selectModalPayer('Sonia')" class="flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-lg text-textMuted hover:text-white transition-all">Sonia</button>
+                    </div>
+                </div>
+                <button onclick="saveNewBudgetItem()" class="w-full mt-2 bg-accent text-black font-bold uppercase tracking-widest py-3.5 rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:scale-[1.02] transition-transform active:scale-95">Add to Ledger</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 overflow-hidden relative min-h-0">
+        <!-- VIEW: STRATEGY -->
+        <div id="view-overview" class="tab-content flex-col h-full w-full absolute inset-0 overflow-y-auto no-scrollbar bg-dark pb-32 pt-12">
+            <div class="p-6">
+                <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">Strategy</h1>
+                <p class="text-textMuted text-sm mb-6 italic">15-Day Luxury Circuit: Istanbul, Cappadocia, Bodrum</p>
+                
+                <!-- UPGRADE 1: Mission Control (Clocks & Countdown) -->
+                <div class="bg-card p-6 rounded-[2rem] border border-white/5 shadow-xl mb-4 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5"><i data-lucide="globe" class="w-32 h-32 text-white"></i></div>
+                    <h2 class="text-sm font-bold text-textMuted uppercase tracking-widest mb-4">Mission Control</h2>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="bg-black/50 rounded-xl p-3 border border-white/5 shadow-inner">
+                            <p class="text-[9px] text-textMuted uppercase font-bold tracking-widest">Kuala Lumpur</p>
+                            <p class="text-xl font-bold text-white mt-1" id="clock-kul">--:--</p>
+                        </div>
+                        <div class="bg-black/50 rounded-xl p-3 border border-white/5 shadow-inner">
+                            <p class="text-[9px] text-textMuted uppercase font-bold tracking-widest">Istanbul</p>
+                            <p class="text-xl font-bold text-accent mt-1" id="clock-ist">--:--</p>
+                        </div>
+                    </div>
+                    <div class="bg-accent/10 rounded-xl p-4 border border-accent/20 flex items-center justify-between shadow-lg">
+                        <div>
+                            <p class="text-[10px] text-accent font-bold uppercase tracking-widest">Departure (Sep 14, 2026)</p>
+                            <p class="text-2xl font-bold text-white mt-0.5 tracking-tight" id="countdown-timer">00d 00h 00m</p>
+                        </div>
+                        <div class="bg-accent/20 p-2.5 rounded-full"><i data-lucide="plane-takeoff" class="w-5 h-5 text-accent"></i></div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-card p-6 rounded-[2rem] border border-white/5 shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-bl-full pointer-events-none"></div>
+                        <i data-lucide="gem" class="w-6 h-6 text-accent mb-4"></i>
+                        <h2 class="text-lg font-bold text-white mb-2 tracking-tight">Elite Infrastructure</h2>
+                        <p class="text-textMuted text-xs leading-relaxed">Mandated usage of Emirates First Class, Relais & Châteaux properties, and Michelin-starred dining.</p>
+                    </div>
+                    <div class="bg-card p-6 rounded-[2rem] border border-white/5 shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full pointer-events-none"></div>
+                        <i data-lucide="wind" class="w-6 h-6 text-blue-400 mb-4"></i>
+                        <h2 class="text-lg font-bold text-white mb-2 tracking-tight">Anti-Fatigue Protocol</h2>
+                        <p class="text-textMuted text-xs leading-relaxed">Strictly eliminates strenuous hiking in favor of VIP transfers, extended spa blocks, and private yacht charters.</p>
+                    </div>
+                </div>
+
+                <!-- UPGRADE 2: VIP Concierge (Phrases) -->
+                <div class="bg-card p-6 rounded-[2rem] border border-white/5 shadow-xl mt-4">
+                    <i data-lucide="message-square" class="w-6 h-6 text-accent mb-4"></i>
+                    <h2 class="text-lg font-bold text-white mb-4 tracking-tight">VIP Concierge</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                            <span class="text-xs text-textMuted font-medium">Hello</span>
+                            <span class="text-sm font-bold text-white">Merhaba</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                            <span class="text-xs text-textMuted font-medium">Thank You</span>
+                            <span class="text-sm font-bold text-white">Teşekkür ederim</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                            <span class="text-xs text-textMuted font-medium">The Bill, Please</span>
+                            <span class="text-sm font-bold text-white">Hesap, lütfen</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-1">
+                            <span class="text-xs text-textMuted font-medium">Very delicious</span>
+                            <span class="text-sm font-bold text-white">Çok lezzetli</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: ITINERARY -->
+        <div id="view-itinerary" class="tab-content active view-wrapper">
+            <div class="pt-6 pb-2 px-0 w-full z-20 bg-dark border-b border-white/5 relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-borderSubtle">
+                    <div id="day-progress-bar" class="h-full bg-accent transition-all duration-500 w-0 shadow-[0_0_10px_rgba(212,175,55,0.5)]"></div>
+                </div>
+                <div class="px-5 mb-4 flex justify-between items-end">
+                    <div class="flex-1">
+                        <h1 class="text-3xl font-bold text-white tracking-tight">Turkey Itinerary</h1>
+                        <p class="text-accent text-[10px] font-bold tracking-widest uppercase flex items-center gap-1 mt-1">
+                            <i data-lucide="map-pin" class="w-3 h-3"></i> <span id="current-zone-label">Zone</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center overflow-x-auto no-scrollbar px-5 gap-2 pb-3" id="day-selector"></div>
+            </div>
+            <div id="deck-container" class="scroll-deck no-scrollbar"></div>
+        </div>
+
+        <!-- VIEW: HOTELS -->
+        <div id="view-hotels" class="tab-content flex-col h-full w-full absolute inset-0 overflow-y-auto no-scrollbar bg-dark pb-32 pt-12">
+            <div class="p-6">
+                <h1 class="text-3xl font-bold text-white mb-1 tracking-tight text-center">Accommodations</h1>
+                <p class="text-textMuted text-[10px] text-center uppercase tracking-[0.2em] mb-8">Elite 5-Star Properties</p>
+                <div id="hotels-list" class="space-y-6"></div>
+            </div>
+        </div>
+
+        <!-- VIEW: MAP -->
+        <div id="view-map" class="tab-content view-wrapper pb-0">
+            <div class="absolute top-[calc(env(safe-area-inset-top)+20px)] left-0 w-full z-[1000] px-5 pointer-events-none flex justify-between items-start">
+                <div class="bg-black/80 backdrop-blur-xl p-4 rounded-2xl border border-white/10 pointer-events-auto shadow-2xl flex items-center gap-4">
+                    <div>
+                        <h1 class="text-xl font-bold text-white tracking-tight">Live Route</h1>
+                        <p class="text-accent text-[10px] font-bold uppercase" id="map-day-label">Day 1</p>
+                    </div>
+                    <i data-lucide="navigation" class="w-5 h-5 text-accent animate-pulse"></i>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <button onclick="toggleAllDaysMap()" id="btn-all-days" class="pointer-events-auto bg-black/80 backdrop-blur-xl p-3.5 rounded-full border border-white/10 shadow-2xl text-white hover:text-accent transition-all active:scale-95" title="Show All Days">
+                        <i data-lucide="globe" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="recenterMap()" class="pointer-events-auto bg-black/80 backdrop-blur-xl p-3.5 rounded-full border border-white/10 shadow-2xl text-white hover:text-accent transition-colors active:scale-95" title="Recenter">
+                        <i data-lucide="crosshair" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="leaflet-map" class="w-full h-full z-0 flex-1 bg-[#0a0a0a]"></div>
+        </div>
+
+        <!-- VIEW: WEATHER -->
+        <div id="view-weather" class="tab-content view-wrapper">
+            <div class="pt-6 pb-2 px-5 w-full bg-dark border-b border-white/5 flex-shrink-0">
+                <h1 class="text-3xl font-bold text-white tracking-tight">Forecast</h1>
+                <p class="text-accent text-[10px] font-bold uppercase tracking-widest mt-1">Sep 14 - Sep 28</p>
+            </div>
+            <div id="weather-deck-container" class="scroll-deck no-scrollbar"></div>
+        </div>
+
+        <!-- VIEW: BUDGET -->
+        <div id="view-budget" class="tab-content flex-col h-full w-full absolute inset-0 overflow-y-auto no-scrollbar bg-dark pb-32 pt-12">
+            <div class="p-6">
+                <div class="flex justify-between items-end mb-4">
+                    <h1 class="text-3xl font-bold text-white tracking-tight">Budget</h1>
+                    <span id="exchange-rate-label" class="text-[9px] text-textMuted uppercase border border-white/10 px-2 py-1.5 rounded-md bg-white/5 shadow-sm transition-all duration-300 flex items-center gap-1.5">
+                        <i data-lucide="refresh-cw" class="w-3 h-3 animate-spin"></i> Syncing...
+                    </span>
+                </div>
+                
+                <div class="bg-card rounded-[2rem] p-6 mb-6 border border-white/5 relative overflow-hidden text-center shadow-2xl">
+                    <div class="absolute inset-0 bg-accent/5 blur-3xl pointer-events-none"></div>
+                    <div class="relative z-10 mb-5 border-b border-white/5 pb-5">
+                        <p class="text-[9px] text-textMuted uppercase tracking-widest mb-1.5">Total Trip Estimate</p>
+                        <p class="text-5xl font-bold text-accent tracking-tight mb-1" id="budget-total">$0</p>
+                        <p class="text-xs text-textMuted font-medium mb-4" id="budget-total-myr">≈ RM 0.00</p>
+                        
+                        <!-- Payer Progress Bar -->
+                        <div class="w-full max-w-[200px] mx-auto mb-2">
+                            <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden flex">
+                                <div id="joe-bar" class="h-full bg-joe transition-all duration-500" style="width: 50%"></div>
+                                <div id="sonia-bar" class="h-full bg-sonia transition-all duration-500" style="width: 50%"></div>
+                            </div>
+                            <div class="flex justify-between mt-1.5">
+                                <span class="text-[8px] uppercase font-bold text-joe tracking-widest" id="joe-pct">Joe 50%</span>
+                                <span class="text-[8px] uppercase font-bold text-sonia tracking-widest" id="sonia-pct">Sonia 50%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 bg-sonia/5 py-3 px-5 rounded-xl border border-sonia/20 w-max mx-auto shadow-inner flex items-center gap-2.5">
+                        <p class="text-[10px] text-sonia uppercase font-bold tracking-wider">Owed to Sonia:</p>
+                        <p class="text-sm font-bold text-white" id="budget-owed">RM 0.00</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between mb-4 px-1">
+                    <h2 class="text-sm font-bold text-white tracking-widest uppercase">Ledger</h2>
+                    <button onclick="openBudgetModal()" class="text-[10px] uppercase font-bold text-accent bg-accent/10 border border-accent/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:bg-accent/20 transition-colors">
+                        <i data-lucide="plus" class="w-3 h-3"></i> Add Item
+                    </button>
+                </div>
+
+                <div id="budget-ledger" class="space-y-3"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="glass-panel w-full flex justify-around items-center px-1 z-50 fixed bottom-0 left-0 right-0 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <button onclick="switchTab('overview')" id="nav-overview" class="nav-item flex-1 flex flex-col items-center justify-center gap-1.5 text-textMuted transition-colors duration-300 h-full"><i data-lucide="map" class="w-5 h-5"></i><span class="text-[8px] uppercase font-bold tracking-wider">Strategy</span></button>
+        <button onclick="switchTab('itinerary')" id="nav-itinerary" class="nav-item flex-1 flex flex-col items-center justify-center gap-1.5 text-accent transition-colors duration-300 h-full"><i data-lucide="layers" class="w-5 h-5"></i><span class="text-[8px] uppercase font-bold tracking-wider">Route</span></button>
+        <button onclick="switchTab('hotels')" id="nav-hotels" class="nav-item flex-1 flex flex-col items-center justify-center gap-1.5 text-textMuted transition-colors duration-300 h-full"><i data-lucide="bed" class="w-5 h-5"></i><span class="text-[8px] uppercase font-bold tracking-wider">Stay</span></button>
+        <button onclick="switchTab('map')" id="nav-map" class="nav-item flex-1 flex flex-col items-center justify-center gap-1.5 text-textMuted transition-colors duration-300 h-full"><i data-lucide="navigation" class="w-5 h-5"></i><span class="text-[8px] uppercase font-bold tracking-wider">Map</span></button>
+        <button onclick="switchTab('weather')" id="nav-weather" class="nav-item flex-1 flex flex-col items-center justify-center gap-1.5 text-textMuted transition-colors duration-300 h-full"><i data-lucide="cloud-sun" class="w-5 h-5"></i><span class="text-[8px] uppercase font-bold tracking-wider">Weather</span></button>
+        <button onclick="switchTab('budget')" id="nav-budget" class="nav-item flex-1 flex flex-col items-center justify-center gap-1.5 text-textMuted transition-colors duration-300 h-full"><i data-lucide="wallet" class="w-5 h-5"></i><span class="text-[8px] uppercase font-bold tracking-wider">Budget</span></button>
+    </nav>
+
+    <script>
+        // --- DATA & STATE ---
+        const haptic = (t = 'light') => { if (!navigator.vibrate) return; navigator.vibrate(t === 'light' ? 10 : [10, 30, 20]); };
+        const defaultFallback = "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80";
+        let currentDayIndex = 0;
+        let mapInstance = null, markersLayer = null, polylineLayer = null;
+        let expandedCategories = new Set(['Hotel', 'Transit']); // Pre-expand important ones
+        let USD_TO_MYR = 4.75;
+        let currentModalPayer = 'Joe';
+        let showAllDaysMap = false;
+
+        // Set global totalUSD tracking variable
+        let globalTotalUSD = 0;
+
+        const createStop = (start, end, duration, location, city, zone, activity, desc, travelMethod, travelDist, travelTime, lat, lng, isMichelin = false) => {
+            const loc = location.toLowerCase();
+            const act = activity.toLowerCase();
+            let img = defaultFallback;
+            if (act.includes('transit') || act.includes('departure') || act.includes('flight')) img = "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('breakfast') || act.includes('hotel') || act.includes('rest') || act.includes('check-in') || loc.includes('suite')) img = "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('lunch') || act.includes('dinner')) img = "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('bazaar') || loc.includes('market') || act.includes('shopping')) img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('palace') || loc.includes('hagia') || loc.includes('basilica') || loc.includes('castle')) img = "https://images.unsplash.com/photo-1541432900884-3418e35bf5e4?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('balloon') || loc.includes('cappadocia') || loc.includes('valley')) img = "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('beach') || loc.includes('yacht') || loc.includes('bodrum') || loc.includes('marina') || loc.includes('cruise')) img = "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80";
+            else if (loc.includes('cafe')) img = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80";
+            else if (act.includes('historic')) img = "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80";
+            
+            return { start, end, duration, location, city, zone, activity, desc, travelMethod, travelDist, travelTime, isMichelin, img, lat, lng, completed: false };
+        };
+
+        // Complete Itinerary as requested
+        const itinerary = [
+            { day: 1, city: "Istanbul", zone: "Arrival & Beşiktaş", stops: [
+                createStop("14:40", "15:40", "1 hr", "Istanbul Airport (IST)", "Istanbul", "Airport", "Arrival", "Arrival, VIP Fast Track. Emirates EK788.", "Walk", "-", "-", 41.260, 28.740),
+                createStop("15:40", "16:40", "1 hr", "Private VIP Mercedes Maybach Transfer", "Istanbul", "Transit", "Transit", "The VIP Fast Track service ensures immediate customs clearance. Baggage is handled exclusively by concierges.", "Car", "40 km", "1 hr", 41.150, 28.870),
+                createStop("16:40", "17:30", "50 min", "Çırağan Palace Kempinski", "Istanbul", "Beşiktaş", "Check-in", "Check-in at the only Ottoman imperial palace hotel on the Bosphorus. Palace Bosphorus Suite.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("17:30", "19:30", "2 hrs", "Hotel Rest", "Istanbul", "Beşiktaş", "Rest", "Allocated rest period to recover from travel fatigue. Unpack, refresh, appreciate sunset views.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("19:30", "21:30", "2 hrs", "Tuğra Restaurant", "Istanbul", "Beşiktaş", "Dinner", "First-night dinner is kept logistically simple. Michelin-recommended Ottoman imperial cuisine.", "Walk", "5 min", "5 min", 41.043, 29.016, true),
+                createStop("21:30", "21:45", "15 min", "Return to Suite", "Istanbul", "Beşiktaş", "Rest", "Retire to the Palace Bosphorus Suite for the night.", "Walk", "0 km", "5 min", 41.043, 29.016)
+            ]},
+            { day: 2, city: "Istanbul", zone: "Historic Peninsula", stops: [
+                createStop("07:30", "08:30", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "A lavish traditional Turkish Kahvaltı featuring kaymak, honeycomb, and fresh cheeses.", "Walk", "5 min", "5 min", 41.043, 29.016),
+                createStop("08:30", "08:43", "13 min", "Transit to Old City", "Istanbul", "Transit", "Transit", "Departure timed to precede heavy traffic and tour group arrivals. Follows the waterfront.", "Taxi", "6 km", "13 min", 41.020, 28.995),
+                createStop("08:43", "09:30", "47 min", "Hagia Sophia Mosque", "Istanbul", "Sultanahmet", "Historic", "Accessing the 6th-century Byzantine architectural masterpiece early avoids the midday queues.", "Walk", "2 min", "2 min", 41.008, 28.980),
+                createStop("09:30", "09:40", "10 min", "Sultanahmet Square", "Istanbul", "Sultanahmet", "Photo Stop", "Brief photographic transit capturing the exterior of the Blue Mosque and Hagia Sophia.", "Walk", "400 m", "5 min", 41.006, 28.976),
+                createStop("09:40", "10:20", "40 min", "Basilica Cistern", "Istanbul", "Sultanahmet", "Historic", "Subterranean exploration of the 6th-century Byzantine water system. Medusa head sculptures.", "Walk", "2 min", "2 min", 41.008, 28.978),
+                createStop("10:20", "12:00", "1 hr 40 min", "Topkapı Palace & Harem", "Istanbul", "Sultanahmet", "Historic", "Exploration of the illuminated Ottoman Empire's nerve center. Focus strictly on the ornate Harem and Imperial Treasury.", "Walk", "600 m", "8 min", 41.011, 28.983),
+                createStop("12:00", "12:15", "15 min", "Transit to Spice Bazaar", "Istanbul", "Transit", "Transit", "Short downhill transfer from the Topkapi complex to the bustling Eminönü waterfront.", "Taxi", "2 km", "15 min", 41.014, 28.975),
+                createStop("12:15", "14:00", "1 hr 45 min", "Pandeli Restaurant", "Istanbul", "Eminönü", "Lunch", "Located inside the Egyptian Spice Bazaar. Michelin recognition, turquoise Iznik tiles, traditional lamb.", "Walk", "2 min", "2 min", 41.016, 28.970, true),
+                createStop("14:00", "14:30", "30 min", "Eminönü Waterfront", "Istanbul", "Eminönü", "Photo Stop", "A brief stroll to observe the iconic Balık Ekmek boats and the Galata Bridge maritime traffic.", "Walk", "5 min", "5 min", 41.018, 28.972),
+                createStop("14:30", "14:55", "25 min", "Return to Hotel", "Istanbul", "Transit", "Transit", "Return to Çırağan Palace to avoid the peak afternoon heat.", "Taxi", "7 km", "25 min", 41.030, 28.990),
+                createStop("14:55", "19:00", "4 hrs 5 min", "Hotel Rest", "Istanbul", "Beşiktaş", "Rest", "Leisure time. Opportunity to utilize the Bosphorus-front infinity pool or Sanitas Spa.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("19:00", "19:15", "15 min", "Transfer to Dinner", "Istanbul", "Transit", "Transit", "Transit to the Şişli/Bomonti district for the pinnacle culinary experience.", "Taxi", "5 km", "15 min", 41.050, 29.000),
+                createStop("19:15", "22:30", "3 hrs 15 min", "TURK Fatih Tutak", "Istanbul", "Bomonti", "Dinner", "Turkey's only 2-Michelin-Star restaurant. 12-course micro-seasonal tasting menu. Unhurried 3-hour journey.", "Walk", "0 min", "0 min", 41.058, 28.983, true),
+                createStop("22:30", "23:00", "30 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Private transfer back to the hotel from Bomonti after dinner.", "Taxi", "5 km", "20 min", 41.043, 29.016)
+            ]},
+            { day: 3, city: "Istanbul", zone: "Retail & Ulus Hills", stops: [
+                createStop("09:00", "10:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Slower morning start following the extensive 12-course tasting menu.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("10:00", "10:05", "5 min", "Transfer to Retail Zone", "Istanbul", "Transit", "Transit", "Short uphill transit to Istanbul's most exclusive luxury shopping district.", "Taxi", "3.4 km", "5 min", 41.047, 29.000),
+                createStop("10:05", "13:05", "3 hrs", "Abdi İpekçi Street", "Istanbul", "Nişantaşı", "Shopping", "Exploration of the 'Rodeo Drive of Istanbul'. Chanel, Hermès, Dior, Vakko, and Beymen.", "Walk", "-", "-", 41.050, 28.990),
+                createStop("13:05", "14:20", "1 hr 15 min", "Kantin / Local Cafe", "Istanbul", "Nişantaşı", "Lunch", "A refined, modern Turkish lunch utilizing seasonal local produce in the heart of the district.", "Walk", "5 min", "5 min", 41.051, 28.991),
+                createStop("14:20", "14:40", "20 min", "Transfer to Zorlu", "Istanbul", "Transit", "Transit", "Transit from street-level boutiques to the premium enclosed shopping complex.", "Taxi", "5 km", "20 min", 41.058, 29.005),
+                createStop("14:40", "17:40", "3 hrs", "Zorlu Center", "Istanbul", "Zincirlikuyu", "Shopping", "Premier luxury mall featuring dramatic architecture, designer boutiques, and climate-controlled retail.", "Walk", "-", "-", 41.066, 29.017),
+                createStop("17:40", "18:00", "20 min", "Transfer to Ulus", "Istanbul", "Transit", "Transit", "Proceeding directly to the upscale Ulus hills for a sunset dining experience.", "Taxi", "4 km", "15 min", 41.066, 29.022),
+                createStop("18:00", "21:00", "3 hrs", "Sunset Grill & Bar", "Istanbul", "Ulus", "Dinner", "Elevated dining overlooking the Bosphorus. Mediterranean-Japanese menu. Golden hour light.", "Walk", "0 min", "0 min", 41.066, 29.028),
+                createStop("21:00", "21:20", "20 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Taxi down from the Ulus hills back to the Bosphorus waterfront.", "Taxi", "4 km", "15 min", 41.043, 29.016)
+            ]},
+            { day: 4, city: "Istanbul", zone: "Galata & Beyoğlu", stops: [
+                createStop("09:30", "10:30", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Restful morning before transitioning to the bohemian and historic Galata neighborhood.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("10:30", "10:48", "18 min", "Transfer to Galata", "Istanbul", "Transit", "Transit", "Transit across the urban core to the Galata Tower district.", "Taxi", "4.7 km", "18 min", 41.035, 28.990),
+                createStop("10:48", "12:48", "2 hrs", "Old Java Coffee Roaster", "Istanbul", "Galata", "Cafe", "Fulfilling the fixed requirement for high-quality animal cafes. Cortados and resident cats. Exact 2-hour block.", "Walk", "-", "-", 41.025, 28.974),
+                createStop("12:48", "13:30", "42 min", "Galata Tower", "Istanbul", "Galata", "Viewpoint", "The medieval Genoese tower provides 360-degree views of the historic peninsula. Pre-booked elevator access.", "Walk", "5 min", "5 min", 41.025, 28.974),
+                createStop("13:30", "13:45", "15 min", "Kamondo Stairs", "Istanbul", "Karaköy", "Photo Stop", "A brief, highly photogenic stop at the 19th-century curved stone staircase. Viral photo spot logic.", "Walk", "5 min", "5 min", 41.023, 28.975),
+                createStop("13:45", "16:15", "2 hrs 30 min", "Neolokal", "Istanbul", "Karaköy", "Lunch", "1-Michelin-Star dining at SALT Galata. Chef Maksut Aşkar revives ancient Anatolian recipes.", "Walk", "5 min", "5 min", 41.022, 28.973, true),
+                createStop("16:15", "18:15", "2 hrs", "Karaköy Exploration", "Istanbul", "Karaköy", "Street", "Leisurely stroll through Karaköy's umbrella-canopied streets. Mandatory 30-min stop at Karaköy Güllüoğlu.", "Walk", "-", "-", 41.023, 28.977),
+                createStop("18:15", "18:25", "10 min", "Füniküler to Istiklal", "Istanbul", "Transit", "Transit", "Taking the historic Tünel up the steep hill, avoiding physical climbing.", "Funicular", "1 km", "10 min", 41.026, 28.976),
+                createStop("18:25", "22:00", "3 hrs 35 min", "Mikla", "Istanbul", "Beyoğlu", "Dinner", "1-Michelin-Star New Anatolian cuisine atop Marmara Pera Hotel. Rooftop cocktails and tasting menu.", "Walk", "10 min", "10 min", 41.031, 28.975, true),
+                createStop("22:00", "22:30", "30 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Transfer from Beyoğlu back to Beşiktaş.", "Taxi", "5 km", "20 min", 41.043, 29.016)
+            ]},
+            { day: 5, city: "Istanbul", zone: "Palaces & Yachts", stops: [
+                createStop("09:00", "10:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Morning preparation for a Bosphorus-centric and historic day.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("10:00", "11:30", "1 hr 30 min", "Dolmabahçe Palace", "Istanbul", "Beşiktaş", "Historic", "19th-century opulent waterfront palace featuring crystal staircases. Timed entry bypasses tourist queues.", "Taxi", "2 km", "10 min", 41.039, 28.998),
+                createStop("11:30", "11:55", "25 min", "Transfer to Balat", "Istanbul", "Transit", "Transit", "Journey across the Golden Horn to the historic, bohemian Jewish and Greek quarters.", "Taxi", "8 km", "25 min", 41.035, 28.970),
+                createStop("11:55", "12:55", "1 hr", "Balat Neighbourhood Walk", "Istanbul", "Balat", "Street", "Highly photogenic exploration of rainbow-painted Ottoman houses and steep cobblestone streets.", "Walk", "5 min", "5 min", 41.031, 28.948),
+                createStop("12:55", "14:55", "2 hrs", "Cafe Naftalin K", "Istanbul", "Balat", "Cafe", "Second required 2-hour feline cafe experience. Nostalgic decor, exceptional coffee, and resident cats.", "Walk", "-", "-", 41.031, 28.948),
+                createStop("14:55", "15:10", "15 min", "Transfer to Bazaar", "Istanbul", "Transit", "Transit", "Transit to the historic trading center for the second retail block.", "Taxi", "4 km", "15 min", 41.020, 28.955),
+                createStop("15:10", "17:10", "2 hrs", "Grand Bazaar (Kapalıçarşı)", "Istanbul", "Sultanahmet", "Shopping", "Exploration of the world's oldest covered market. Focus strictly on premium Turkish goods.", "Walk", "-", "-", 41.010, 28.968),
+                createStop("17:10", "17:35", "25 min", "Return to Hotel", "Istanbul", "Transit", "Transit", "Return to Beşiktaş for decompression time.", "Taxi", "8 km", "25 min", 41.025, 28.990),
+                createStop("17:35", "19:35", "2 hrs", "Private Sunset Cruise", "Istanbul", "Bosphorus", "Activity", "Deeply romantic 2-hour private yacht charter. Champagne service passing waterfront wooden mansions (Yalı).", "Yacht", "Board at Dock", "-", 41.043, 29.016),
+                createStop("19:35", "19:50", "15 min", "Transfer to Dinner", "Istanbul", "Transit", "Transit", "Short drive further north along the European shore to Bebek.", "Taxi", "6 km", "15 min", 41.060, 29.030),
+                createStop("19:50", "22:50", "3 hrs", "Sankai by Nagaya", "Istanbul", "Bebek", "Dinner", "1-Michelin-Star Japanese omakase at the Bebek Hotel. Edomae-style sushi and sweeping Bosphorus views.", "Walk", "0 min", "0 min", 41.077, 29.043, true),
+                createStop("22:50", "23:15", "25 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Scenic night drive south along the Bosphorus back to the hotel.", "Taxi", "6 km", "15 min", 41.043, 29.016)
+            ]},
+            { day: 6, city: "Istanbul", zone: "Asian Side & Nightlife", stops: [
+                createStop("10:00", "11:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Late start to accommodate the previous evening's late dining.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("11:00", "11:45", "45 min", "Bosphorus Ferry to Kadıköy", "Istanbul", "Transit", "Transit", "A scenic, local public ferry crossing from the European to the Asian side of Istanbul.", "Ferry", "5 km", "30 min", 41.042, 29.006),
+                createStop("11:45", "12:30", "45 min", "Fazıl Bey's Turkish Coffee", "Istanbul", "Kadıköy", "Cafe", "Established in 1923, serves arguably the finest traditional Turkish coffee in the city.", "Walk", "10 min", "10 min", 40.990, 29.025),
+                createStop("12:30", "14:30", "2 hrs", "Kadıköy Çarşısı & Lunch", "Istanbul", "Kadıköy", "Street", "Exploration of the vibrant local food market. Lunch consists of authentic, high-quality street food.", "Walk", "-", "-", 40.990, 29.025),
+                createStop("14:30", "16:00", "1 hr 30 min", "Moda Coastal Walk", "Istanbul", "Moda", "Street", "A relaxing stroll through the upscale Moda neighborhood and coastal park, devoid of tourist crowds.", "Walk", "-", "-", 40.985, 29.020),
+                createStop("16:00", "17:00", "1 hr", "Ferry Return & Rest", "Istanbul", "Transit", "Transit", "Return to the European side to rest and prepare for an evening entirely focused on high-end nightlife.", "Ferry/Taxi", "7 km", "1 hr", 41.020, 29.010),
+                createStop("17:00", "19:30", "2 hrs 30 min", "Hotel Rest", "Istanbul", "Beşiktaş", "Rest", "Extended rest and preparation for a late night.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("19:30", "22:00", "2 hrs 30 min", "Nicole", "Istanbul", "Cihangir", "Dinner", "1-Michelin-Star dining on a Beyoğlu rooftop. Chef Serkan Aksoy delivers sophisticated Turkish flavors.", "Taxi", "4 km", "15 min", 41.030, 28.978, true),
+                createStop("22:00", "01:00", "3 hrs", "Sortie Club Complex", "Istanbul", "Kuruçeşme", "Nightlife", "Istanbul's most glamorous waterfront nightlife venue. International DJs and an elite crowd.", "Taxi", "5 km", "15 min", 41.055, 29.034),
+                createStop("01:00", "01:15", "15 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Short waterfront transfer back to the palace.", "Taxi", "3 km", "10 min", 41.043, 29.016)
+            ]},
+            { day: 7, city: "Istanbul", zone: "Spa & Seafood", stops: [
+                createStop("11:00", "12:00", "1 hr", "Çırağan Palace Breakfast", "Istanbul", "Beşiktaş", "Breakfast", "Late wake-up following the nightclub experience.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("12:00", "16:00", "4 hrs", "Sanitas Spa & Hammam", "Istanbul", "Beşiktaş", "Activity", "A slow, luxurious recovery day. Exclusive use of the marble hammam for a traditional Turkish bath and massage.", "Walk", "0 min", "0 min", 41.043, 29.016),
+                createStop("16:00", "16:20", "20 min", "Transfer to Arnavutköy", "Istanbul", "Transit", "Transit", "Transit along the Bosphorus to the preserved fishing village of Arnavutköy.", "Taxi", "4 km", "15 min", 41.055, 29.030),
+                createStop("16:20", "17:30", "1 hr 10 min", "Arnavutköy Exploration", "Istanbul", "Arnavutköy", "Street", "A quiet stroll admiring the historic wooden mansions (Yalı) along the waterfront.", "Walk", "-", "-", 41.067, 29.043),
+                createStop("17:30", "19:30", "2 hrs", "Alexandra Cocktail Bar", "Istanbul", "Arnavutköy", "Nightlife", "Highly regarded for creative mixology and a stunning rooftop view of the Bosphorus.", "Walk", "2 min", "2 min", 41.067, 29.043),
+                createStop("19:30", "21:30", "2 hrs", "Local Seafood Dinner", "Istanbul", "Arnavutköy", "Dinner", "A premium, sit-down local seafood experience overlooking the water.", "Walk", "2 min", "2 min", 41.067, 29.043),
+                createStop("21:30", "21:50", "20 min", "Return to Çırağan Palace", "Istanbul", "Transit", "Transit", "Transfer back to the hotel to pack for tomorrow's flight.", "Taxi", "4 km", "15 min", 41.043, 29.016)
+            ]},
+            { day: 8, city: "Cappadocia", zone: "Transit to Caves", stops: [
+                createStop("08:30", "09:20", "50 min", "Çırağan Palace Check-out & Transfer", "Istanbul", "Transit", "Transit", "Private transfer to Istanbul Airport for the domestic departure to the Anatolian plateau.", "Taxi", "40 km", "50 min", 41.260, 28.740),
+                createStop("09:20", "12:40", "3 hrs 20 min", "Flight IST to NAV", "Air", "Transit", "Flight", "Turkish Airlines TK2004. Domestic business class guarantees optimal comfort.", "Flight", "700 km", "1 hr 20m", 38.770, 34.670),
+                createStop("12:40", "13:20", "40 min", "Private Airport Transfer", "Cappadocia", "Transit", "Transit", "Private luxury transfer through the surreal volcanic landscapes up to the elevated village of Uçhisar.", "VIP Van", "35 km", "40 min", 38.700, 34.730),
+                createStop("13:20", "14:20", "1 hr", "Museum Hotel Check-in", "Cappadocia", "Uçhisar", "Check-in", "Check-in at the only Relais & Châteaux property in Turkey. Imperial Pool Suite.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("14:20", "18:20", "4 hrs", "Hotel Infinity Pool & Rest", "Cappadocia", "Uçhisar", "Rest", "Decompression time utilizing the Roman-style heated outdoor infinity pool offering panoramic views.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("18:20", "20:30", "2 hrs 10 min", "Lil'a Restaurant", "Cappadocia", "Uçhisar", "Dinner", "Fine dining within the Museum Hotel. Elegant interpretations of classic Cappadocian recipes.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("20:30", "20:45", "15 min", "Return to Suite", "Cappadocia", "Uçhisar", "Rest", "Retire to the Imperial Pool Suite.", "Walk", "0 km", "5 min", 38.630, 34.805)
+            ]},
+            { day: 9, city: "Cappadocia", zone: "Balloons & Valleys", stops: [
+                createStop("04:45", "05:15", "30 min", "Museum Hotel Pre-flight Prep", "Cappadocia", "Uçhisar", "Transit", "Extremely early wake-up required for the signature Cappadocia experience.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("05:15", "08:00", "2 hrs 45 min", "Private Hot Air Balloon", "Cappadocia", "Valleys", "Activity", "Private basket drifting over the fairy chimneys at sunrise. Concludes with a champagne toast.", "VIP Van", "Var", "-", 38.650, 34.830),
+                createStop("08:00", "09:30", "1 hr 30 min", "Museum Hotel Breakfast", "Cappadocia", "Uçhisar", "Breakfast", "Extensive traditional breakfast on the hotel terrace, watching the remaining balloons descend.", "VIP Van", "10 km", "20 min", 38.630, 34.805),
+                createStop("09:30", "09:36", "6 min", "Transfer to Göreme", "Cappadocia", "Transit", "Transit", "Short downhill transit to the primary historical site.", "Taxi", "5.8 km", "6 min", 38.635, 34.825),
+                createStop("09:36", "11:30", "1 hr 54 min", "Göreme Open Air Museum", "Cappadocia", "Göreme", "Historic", "UNESCO-listed network of rock-cut churches with 10th-century Byzantine frescoes. Flat walking.", "Walk", "-", "-", 38.640, 34.845),
+                createStop("11:30", "13:00", "1 hr 30 min", "Local Gözleme Lunch", "Cappadocia", "Göreme", "Lunch", "Authentic local lunch focusing on fresh Gözleme and pottery kebab.", "Walk", "1 km", "15 min", 38.643, 34.831),
+                createStop("13:00", "13:30", "30 min", "Love Valley Photo Stop", "Cappadocia", "Love Valley", "Photo Stop", "A brief stop at the viewpoint overlooking the famous phallic rock formations. Zero physical exertion.", "Taxi", "4 km", "10 min", 38.659, 34.832),
+                createStop("13:30", "16:30", "3 hrs", "Return to Hotel & Rest", "Cappadocia", "Uçhisar", "Rest", "Return to the suite for a mandatory midday rest to offset the 4:45 AM wake-up call.", "Taxi", "6 km", "15 min", 38.630, 34.805),
+                createStop("16:30", "18:00", "1 hr 30 min", "Rose Valley Sunset Drive", "Cappadocia", "Rose Valley", "Activity", "Driven tour to scenic viewpoints as the volcanic rock turns pink. Exertion kept to absolute minimum.", "VIP Van", "8 km", "20 min", 38.655, 34.850),
+                createStop("18:00", "20:00", "2 hrs", "Premium Cave Dinner", "Cappadocia", "Ürgüp", "Dinner", "A high-end regional dinner at a boutique cave restaurant (e.g., Seki Restaurant).", "Taxi", "12 km", "20 min", 38.630, 34.910),
+                createStop("20:00", "20:30", "30 min", "Return to Museum Hotel", "Cappadocia", "Transit", "Transit", "Transfer from Ürgüp back to Uçhisar.", "Taxi", "12 km", "20 min", 38.630, 34.805)
+            ]},
+            { day: 10, city: "Cappadocia", zone: "Underground & Castle", stops: [
+                createStop("09:00", "10:00", "1 hr", "Museum Hotel Breakfast", "Cappadocia", "Uçhisar", "Breakfast", "Relaxed morning start.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("10:00", "10:29", "29 min", "Transfer to Kaymaklı", "Cappadocia", "Transit", "Transit", "Drive south across the plateau to the subterranean city.", "Taxi", "25.7 km", "29 min", 38.545, 34.778),
+                createStop("10:29", "11:45", "1 hr 16 min", "Kaymaklı Underground City", "Cappadocia", "Kaymaklı", "Historic", "Exploration of the ancient multi-level underground refuge carved by early Christians.", "Walk/Stairs", "-", "-", 38.460, 34.752),
+                createStop("11:45", "12:30", "45 min", "Return & Light Lunch", "Cappadocia", "Uçhisar", "Lunch", "Return to Uçhisar for a light cafe lunch to recalibrate.", "Taxi", "25.7 km", "30 min", 38.630, 34.805),
+                createStop("12:30", "15:30", "3 hrs", "Hotel Rest", "Cappadocia", "Uçhisar", "Rest", "Free time to enjoy the suite's private amenities or book an in-room massage.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("15:30", "17:00", "1 hr 30 min", "Argos Wine Cellar Tasting", "Cappadocia", "Uçhisar", "Activity", "Private wine tasting inside the spectacular underground rock-carved wine cellar of the Argos hotel.", "Walk", "5 min", "5 min", 38.630, 34.805),
+                createStop("17:00", "18:00", "1 hr", "Uçhisar Castle Sunset", "Cappadocia", "Uçhisar", "Viewpoint", "A short, easy ascent to the highest point in Cappadocia for 360-degree panoramic views.", "Walk", "5 min", "5 min", 38.629, 34.805),
+                createStop("18:00", "20:00", "2 hrs", "Local Fine Dining", "Cappadocia", "Uçhisar", "Dinner", "Dinner in the village of Uçhisar, maintaining a relaxed, localized evening pace.", "Walk", "-", "-", 38.630, 34.805),
+                createStop("20:00", "20:15", "15 min", "Return to Museum Hotel", "Cappadocia", "Transit", "Transit", "Short walk or taxi back to the hotel in the village.", "Walk/Taxi", "500 m", "5 min", 38.630, 34.805)
+            ]},
+            { day: 11, city: "Cappadocia", zone: "Avanos & Chimneys", stops: [
+                createStop("09:30", "10:30", "1 hr", "Museum Hotel Breakfast", "Cappadocia", "Uçhisar", "Breakfast", "Final full day in Cappadocia begins leisurely.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("10:30", "11:00", "30 min", "Transfer to Avanos", "Cappadocia", "Transit", "Transit", "Drive to the pottery town situated on the Kızılırmak (Red River).", "Taxi", "15 km", "25 min", 38.670, 34.820),
+                createStop("11:00", "13:00", "2 hrs", "Private Pottery Workshop", "Cappadocia", "Avanos", "Activity", "Hands-on, private artisan experience with Hittite-era red clay techniques.", "Walk", "-", "-", 38.715, 34.846),
+                createStop("13:00", "14:00", "1 hr", "Riverside Lunch", "Cappadocia", "Avanos", "Lunch", "Lunch at a high-quality local restaurant overlooking the Red River.", "Walk", "5 min", "5 min", 38.715, 34.846),
+                createStop("14:00", "14:45", "45 min", "Pasabağ / Devrent Valleys", "Cappadocia", "Valleys", "Photo Stop", "Monks & Imagination Valleys. Highly concentrated fairy chimneys. Zero strenuous walking.", "Taxi", "8 km", "10 min", 38.675, 34.855),
+                createStop("14:45", "15:15", "30 min", "Return to Hotel", "Cappadocia", "Transit", "Transit", "Return for final afternoon relaxation.", "Taxi", "12 km", "20 min", 38.630, 34.805),
+                createStop("15:15", "18:30", "3 hrs 15 min", "Hotel Rest", "Cappadocia", "Uçhisar", "Rest", "Final afternoon to enjoy the cave luxury and pack for the coastal transition.", "Walk", "0 min", "0 min", 38.630, 34.805),
+                createStop("18:30", "20:30", "2 hrs", "Farewell Cappadocia Dinner", "Cappadocia", "Uçhisar", "Dinner", "A celebratory final dinner in the region.", "Walk/Taxi", "-", "-", 38.630, 34.805),
+                createStop("20:30", "20:45", "15 min", "Return to Museum Hotel", "Cappadocia", "Transit", "Transit", "Retire to the hotel to pack for the flight to Bodrum.", "Walk/Taxi", "500 m", "5 min", 38.630, 34.805)
+            ]},
+            { day: 12, city: "Bodrum", zone: "Transit to Riviera", stops: [
+                createStop("07:15", "08:15", "1 hr", "Museum Hotel Check-out", "Cappadocia", "Transit", "Transit", "Morning departure to Kayseri Erkilet Airport (ASR) for the flight to Bodrum.", "VIP Van", "70 km", "1 hr", 38.770, 35.495),
+                createStop("08:40", "13:15", "4 hrs 35 min", "Flight ASR to IST to BJV", "Air", "Transit", "Flight", "Turkish Airlines Business Class routing via Istanbul for schedule reliability.", "Flight", "Var", "4h 35m", 37.250, 27.664),
+                createStop("13:15", "13:55", "40 min", "Private Resort Transfer", "Bodrum", "Transit", "Transit", "Luxury minivan transfer directly to the secluded Barbaros Bay cliffs, avoiding town traffic.", "VIP Van", "35 km", "40 min", 37.100, 27.600),
+                createStop("13:55", "18:30", "4 hrs 35 min", "Kempinski Check-in", "Bodrum", "Barbaros Bay", "Check-in", "Check-in to the premium coastal resort. Time to decompress and enjoy the private balcony.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("18:30", "21:00", "2 hrs 30 min", "Kitchen by Osman Sezener", "Bodrum", "Barbaros Bay", "Dinner", "1-Michelin-Star dining showcasing modern Anatolian coastal cuisine. Exceptional culinary introduction.", "Walk", "0 min", "0 min", 36.995, 27.567, true),
+                createStop("21:00", "21:15", "15 min", "Return to Suite", "Bodrum", "Barbaros Bay", "Rest", "Retire to the Kempinski suite.", "Walk", "0 km", "5 min", 36.995, 27.567)
+            ]},
+            { day: 13, city: "Bodrum", zone: "Yacht & Marina", stops: [
+                createStop("09:00", "10:00", "1 hr", "Kempinski Resort Breakfast", "Bodrum", "Barbaros Bay", "Breakfast", "Breakfast on the outdoor terrace overlooking the Aegean Sea.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("10:00", "14:00", "4 hrs", "Private Motor Yacht Charter", "Bodrum", "Peninsula", "Activity", "4-hour luxury motor yacht charter navigating hidden coves. Catered champagne lunch on board.", "Yacht", "Var", "-", 37.032, 27.426),
+                createStop("14:00", "14:40", "40 min", "Transfer to Yalıkavak", "Bodrum", "Transit", "Transit", "Transfer from the charter drop-off to the premier luxury hub of the peninsula.", "VIP Van", "25 km", "40 min", 37.060, 27.350),
+                createStop("14:40", "18:00", "3 hrs 20 min", "Yalıkavak Marina Shopping", "Bodrum", "Yalıkavak", "Shopping", "Final major shopping block at Turkey's most glamorous mega-yacht marina. Dior, Louis Vuitton, Prada.", "Walk", "-", "-", 37.106, 27.283),
+                createStop("18:00", "18:45", "45 min", "Transfer to Türkbükü", "Bodrum", "Transit", "Transit", "Scenic coastal drive to the exclusive Türkbükü bay.", "Taxi", "15 km", "30 min", 37.120, 27.330),
+                createStop("18:45", "21:30", "2 hrs 45 min", "Maçakızı Restaurant", "Bodrum", "Türkbükü", "Dinner", "1-Michelin-Star dining at the cult-status hotel. Exceptional Aegean seafood and elite people-watching.", "Walk", "0 min", "0 min", 37.135, 27.388, true),
+                createStop("21:30", "22:15", "45 min", "Return to Kempinski Resort", "Bodrum", "Transit", "Transit", "Late evening return to the serenity of the Kempinski.", "VIP Van", "40 km", "45 min", 36.995, 27.567)
+            ]},
+            { day: 14, city: "Bodrum", zone: "Decompression", stops: [
+                createStop("10:00", "11:00", "1 hr", "Kempinski Resort Breakfast", "Bodrum", "Barbaros Bay", "Breakfast", "Final full day entirely dedicated to decompression.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("11:00", "15:00", "4 hrs", "Kempinski Private Beach", "Bodrum", "Barbaros Bay", "Rest", "Exclusive access to the private sandy beach and infinity pool. Reserved luxury cabanas.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("15:00", "18:00", "3 hrs", "Premium Spa Experience", "Bodrum", "Barbaros Bay", "Activity", "Extensive spa afternoon featuring couples' massages and hydrotherapy. Physical reset.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("18:00", "21:00", "3 hrs", "Resort Fine Dining", "Bodrum", "Barbaros Bay", "Dinner", "A relaxed, elegant farewell dinner on the property, eliminating transit on the final evening.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("21:00", "21:15", "15 min", "Return to Suite", "Bodrum", "Barbaros Bay", "Rest", "Final night in Turkey. Retire to suite.", "Walk", "0 km", "5 min", 36.995, 27.567)
+            ]},
+            { day: 15, city: "Departure", zone: "Transit to KUL", stops: [
+                createStop("10:00", "11:30", "1 hr 30 min", "Kempinski Breakfast & Pack", "Bodrum", "Barbaros Bay", "Rest", "Final breakfast and packing sequence.", "Walk", "0 min", "0 min", 36.995, 27.567),
+                createStop("11:30", "12:10", "40 min", "Airport VIP Transfer", "Bodrum", "Transit", "Transit", "Private transfer back to Milas-Bodrum Airport.", "VIP Van", "35 km", "40 min", 37.250, 27.664),
+                createStop("12:10", "16:20", "4 hrs 10 min", "Flight BJV to IST", "Air", "Transit", "Flight", "Turkish Airlines Domestic connection routing back to Istanbul Airport (IST).", "Flight", "500 km", "1 hr 15m", 41.260, 28.740),
+                createStop("16:20", "19:35", "3 hrs 15 min", "Emirates Lounge & Duty-Free", "Istanbul", "Airport", "Transit", "Final luxury shopping in IST's extensive retail concourse, followed by relaxation in the premium lounge.", "Walk", "-", "-", 41.260, 28.740),
+                createStop("19:35", "14:25", "13 hrs 50m", "Emirates EK First Class", "Air", "Transit", "Flight", "Overnight long-haul return via Dubai (DXB) in Emirates First Class, arriving in Kuala Lumpur.", "Flight", "8000 km", "13h 50m", 3.140, 101.686)
+            ]}
+        ];
+
+        const hotelsData = [
+            { name: "Çırağan Palace Kempinski", location: "Istanbul", nights: 7, dates: "Sep 14 - Sep 21", price: "$10,500", desc: "The only Ottoman imperial palace hotel on the Bosphorus. Palace Bosphorus Suite.", img: "https://images.unsplash.com/photo-1542314831-c6a4d14fff88?auto=format&fit=crop&w=800&q=80" },
+            { name: "Museum Hotel", location: "Cappadocia", nights: 4, dates: "Sep 21 - Sep 25", price: "$11,520", desc: "Relais & Châteaux property in Uçhisar. Imperial Pool Suite with private plunge pool.", img: "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=800&q=80" },
+            { name: "Kempinski Barbaros Bay", location: "Bodrum", nights: 3, dates: "Sep 25 - Sep 28", price: "$3,600", desc: "Decompression finale with private cliffside bay and Thalasso spa.", img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80" }
+        ];
+
+        let defaultBudgetLedger = [
+            { day: "1-15", item: "Emirates First Class & Domestic", amount: 15200, paidBy: "Joe", category: "Transit" },
+            { day: "1-8", item: "Çırağan Palace (7 Nights)", amount: 10500, paidBy: "Joe", category: "Hotel" },
+            { day: "8-12", item: "Museum Hotel (4 Nights)", amount: 11520, paidBy: "Joe", category: "Hotel" },
+            { day: "12-15", item: "Kempinski Barbaros Bay (3 Nts)", amount: 3600, paidBy: "Joe", category: "Hotel" },
+            { day: "1-15", item: "Luxury Retail Allowance", amount: 15000, paidBy: "Joe", category: "Shopping" },
+            { day: "1-15", item: "Michelin Dining (TURK, Mikla, etc)", amount: 3100, paidBy: "Joe", category: "Food" },
+            { day: "1-15", item: "Other Food & Cafes", amount: 1200, paidBy: "Sonia", category: "Food" },
+            { day: "1-15", item: "VIP Transit & Taxis", amount: 1500, paidBy: "Sonia", category: "Transit" },
+            { day: "1-15", item: "Nightlife & Bars", amount: 1000, paidBy: "Sonia", category: "Activity" },
+            { day: "1-15", item: "Misc Activities (Yacht, Balloon)", amount: 4400, paidBy: "Sonia", category: "Activity" }
+        ];
+
+        let budgetLedger = [...defaultBudgetLedger];
+
+        const weatherData = {
+            1: { tempDay: "25°C", tempNight: "18°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm arrival in Istanbul.", wear: "Smart Casual." },
+            2: { tempDay: "24°C", tempNight: "17°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Perfect historic touring.", wear: "Comfortable chic." },
+            3: { tempDay: "26°C", tempNight: "18°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm retail day.", wear: "Designer casual." },
+            4: { tempDay: "25°C", tempNight: "17°C", condition: "Partly Cloudy", iconDay: "cloud-sun", iconNight: "cloud-moon", desc: "Mild afternoon.", wear: "Walking shoes." },
+            5: { tempDay: "24°C", tempNight: "16°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Crisp Bosphorus breeze.", wear: "Light Jacket for Yacht." },
+            6: { tempDay: "25°C", tempNight: "17°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Beautiful Asian side.", wear: "Day-to-night attire." },
+            7: { tempDay: "24°C", tempNight: "16°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Mild coastal walk.", wear: "Resort wear." },
+            8: { tempDay: "22°C", tempNight: "10°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Cooler in Cappadocia.", wear: "Layers." },
+            9: { tempDay: "21°C", tempNight: "8°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Cold pre-dawn for balloon.", wear: "Heavy jacket for morning." },
+            10: { tempDay: "22°C", tempNight: "9°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Crisp autumn plateau.", wear: "Comfortable layers." },
+            11: { tempDay: "23°C", tempNight: "10°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm afternoon.", wear: "Casual." },
+            12: { tempDay: "28°C", tempNight: "20°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Arrival on the Riviera.", wear: "Light fabrics." },
+            13: { tempDay: "29°C", tempNight: "21°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Perfect Yacht weather.", wear: "Swimwear & Linen." },
+            14: { tempDay: "28°C", tempNight: "20°C", condition: "Sunny", iconDay: "sun", iconNight: "moon", desc: "Warm beach day.", wear: "Resort wear." },
+            15: { tempDay: "27°C", tempNight: "19°C", condition: "Clear", iconDay: "sun", iconNight: "moon", desc: "Pleasant departure.", wear: "Travel comfort." }
+        };
+
+        // --- CORE ENGINE ---
+        const loadState = () => {
+            try {
+                // Progress State
+                const p = localStorage.getItem('elite_progress_2026'); 
+                if (p) { const parsed = JSON.parse(p); itinerary.forEach((day, d) => { day.stops.forEach((s, si) => { if (parsed[d] && parsed[d][si] !== undefined) s.completed = parsed[d][si]; }); }); }
+                
+                // Budget State (Full Array mapping)
+                const b = localStorage.getItem('elite_budget_v2');
+                if (b) {
+                    budgetLedger = JSON.parse(b);
+                } else {
+                    // Fallback to V1 logic if updating from older version
+                    const old_b = localStorage.getItem('elite_budget_2026');
+                    if (old_b) {
+                        JSON.parse(old_b).forEach((tx, i) => { if (budgetLedger[i]) { budgetLedger[i].amount = tx.amount; budgetLedger[i].paidBy = tx.paidBy; } });
+                        saveBudgetState(); // Migrate to v2
+                    }
+                }
+            } catch(e) {}
+        };
+        const saveBudgetState = () => { try { localStorage.setItem('elite_budget_v2', JSON.stringify(budgetLedger)); } catch(e) {} };
+        const saveProgressState = () => { try { localStorage.setItem('elite_progress_2026', JSON.stringify(itinerary.map(day => day.stops.map(s => s.completed)))); } catch(e) {} };
+
+        const fetchExchangeRate = async () => {
+            const label = document.getElementById('exchange-rate-label');
+            
+            try {
+                // Fetching live data from Open Exchange Rates API
+                const r = await fetch('https://open.er-api.com/v6/latest/USD');
+                const d = await r.json(); 
+                
+                if (d?.rates?.MYR) { 
+                    USD_TO_MYR = d.rates.MYR; 
+                    label.innerHTML = `<i data-lucide="check-circle" class="w-3 h-3 text-success"></i> <span class="text-success">Live: 1 USD = ${USD_TO_MYR.toFixed(2)} MYR</span>`;
+                    label.classList.add('bg-success/10', 'border-success/20');
+                    label.classList.remove('bg-white/5', 'border-white/10');
+                } else {
+                    throw new Error("Rate not found in API response");
+                }
+            } catch (e) {
+                console.error("Exchange rate sync failed, using fallback:", e);
+                label.innerHTML = `<i data-lucide="wifi-off" class="w-3 h-3"></i> Offline: 1 USD = ${USD_TO_MYR.toFixed(2)} MYR`;
+            }
+            
+            lucide.createIcons();
+            updateBudgetTotals();
+        };
+
+        const switchTab = (tabId) => {
+            haptic('light');
+            document.querySelectorAll('.nav-item').forEach(btn => { btn.classList.remove('text-accent'); btn.classList.add('text-textMuted'); });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if(activeBtn) { activeBtn.classList.remove('text-textMuted'); activeBtn.classList.add('text-accent'); }
+            document.querySelectorAll('.tab-content').forEach(view => view.classList.remove('active'));
+            const activeView = document.getElementById(`view-${tabId}`);
+            if(activeView) activeView.classList.add('active');
+            if (tabId === 'map') { setTimeout(() => { if (!mapInstance) initMap(); mapInstance.invalidateSize(); updateMap(currentDayIndex); }, 100); }
+            if (tabId === 'hotels') renderHotels();
+            if (tabId === 'weather') renderWeather();
+            if (tabId === 'budget') renderBudget();
+        };
+
+        // --- MAP FUNCTIONS ---
+        const recenterMap = () => {
+            haptic('light');
+            if(mapInstance) updateMap(currentDayIndex);
+        }
+
+        const toggleAllDaysMap = () => {
+            haptic('light');
+            showAllDaysMap = !showAllDaysMap;
+            
+            const btn = document.getElementById('btn-all-days');
+            if (showAllDaysMap) {
+                btn.classList.add('bg-accent/20', 'text-accent', 'border-accent/50');
+                btn.classList.remove('bg-black/80', 'text-white', 'border-white/10');
+            } else {
+                btn.classList.remove('bg-accent/20', 'text-accent', 'border-accent/50');
+                btn.classList.add('bg-black/80', 'text-white', 'border-white/10');
+            }
+            
+            if(mapInstance) updateMap(currentDayIndex);
+        };
+
+        // --- BUDGET FUNCTIONS ---
+        const togglePayer = (index) => { haptic('light'); budgetLedger[index].paidBy = (budgetLedger[index].paidBy === 'Joe' ? 'Sonia' : 'Joe'); saveBudgetState(); renderBudget(); };
+        const updateAmount = (index, val) => { budgetLedger[index].amount = parseFloat(val) || 0; saveBudgetState(); updateBudgetTotals(); };
+        const toggleCategory = (cat) => { haptic('light'); if (expandedCategories.has(cat)) expandedCategories.delete(cat); else expandedCategories.add(cat); renderBudget(); };
+        
+        const deleteBudgetItem = (index) => {
+            haptic('light');
+            budgetLedger.splice(index, 1);
+            saveBudgetState();
+            renderBudget();
+        }
+
+        const updateBudgetTotals = () => {
+            let totalUSD = 0, joeUSD = 0, soniaUSD = 0;
+            budgetLedger.forEach(tx => { 
+                totalUSD += tx.amount; 
+                if(tx.paidBy === 'Sonia') soniaUSD += tx.amount; 
+                else joeUSD += tx.amount;
+            });
+            
+            globalTotalUSD = totalUSD; // Update global for category bars
+
+            document.getElementById('budget-total').innerText = `$${totalUSD.toLocaleString()}`;
+            document.getElementById('budget-total-myr').innerText = `≈ RM ${(totalUSD * USD_TO_MYR).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            document.getElementById('budget-owed').innerText = `RM ${(soniaUSD * USD_TO_MYR).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            
+            // Update Progress Bar
+            const joePct = totalUSD > 0 ? Math.round((joeUSD / totalUSD) * 100) : 50;
+            const soniaPct = totalUSD > 0 ? Math.round((soniaUSD / totalUSD) * 100) : 50;
+            
+            document.getElementById('joe-bar').style.width = `${joePct}%`;
+            document.getElementById('sonia-bar').style.width = `${soniaPct}%`;
+            document.getElementById('joe-pct').innerText = `Joe ${joePct}%`;
+            document.getElementById('sonia-pct').innerText = `Sonia ${soniaPct}%`;
+        };
+
+        const renderBudget = () => {
+            const container = document.getElementById('budget-ledger');
+            const grouped = {};
+            // Group by category, preserve original index for editing
+            budgetLedger.forEach((tx, idx) => { 
+                if (!grouped[tx.category]) grouped[tx.category] = { total: 0, items: [] }; 
+                grouped[tx.category].total += tx.amount; 
+                grouped[tx.category].items.push({ ...tx, originalIndex: idx }); 
+            });
+            
+            let html = '';
+            const icons = { 'Hotel': 'bed', 'Food': 'utensils', 'Transit': 'car', 'Shopping': 'shopping-bag', 'Activity': 'activity' };
+            
+            // Sort categories to keep UI consistent
+            const categoryOrder = ['Hotel', 'Transit', 'Food', 'Shopping', 'Activity'];
+            const sortedCategories = Object.keys(grouped).sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b));
+
+            sortedCategories.forEach(cat => {
+                const data = grouped[cat];
+                const isEx = expandedCategories.has(cat);
+                
+                // Calculate percentage of total budget for the progress bar
+                const catPct = globalTotalUSD > 0 ? (data.total / globalTotalUSD) * 100 : 0;
+
+                html += `<div class="bg-card rounded-[1.25rem] border border-white/5 mb-3 overflow-hidden shadow-lg transition-all relative">
+                    <!-- UPGRADE 3: Category Visual Bar -->
+                    <div class="absolute top-0 left-0 h-1 bg-accent/50 z-10 transition-all duration-1000" style="width: ${catPct}%"></div>
+                    
+                    <button onclick="toggleCategory('${cat}')" class="w-full flex items-center justify-between p-4 focus:outline-none transition-colors hover:bg-white/5 relative z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-[#1a1a1a] p-2.5 rounded-full text-accent border border-white/5 shadow-inner">
+                                <i data-lucide="${icons[cat] || 'wallet'}" class="w-4 h-4"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-white font-bold text-sm uppercase tracking-widest">${cat}</p>
+                                <p class="text-[10px] text-textMuted mt-0.5">${data.items.length} items • ${catPct.toFixed(1)}%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <p class="text-white font-bold text-sm">$${data.total.toLocaleString()}</p>
+                            <i data-lucide="${isEx ? 'chevron-down' : 'chevron-right'}" class="w-4 h-4 text-textMuted"></i>
+                        </div>
+                    </button>
+                    <div class="${isEx ? 'block' : 'hidden'} border-t border-white/5 bg-[#0a0a0a] p-2.5 relative z-20">
+                        <div class="space-y-2">`;
+                
+                data.items.forEach(tx => { 
+                    html += `
+                        <div class="bg-[#121212] p-2.5 rounded-xl flex items-center justify-between border border-white/5 gap-2 shadow-sm relative group">
+                            <div class="flex items-center gap-3 flex-1 min-w-0">
+                                <div class="flex-1 min-w-0 pl-1">
+                                    <p class="text-white text-xs font-semibold line-clamp-1 pr-6">${tx.item}</p>
+                                    <div class="flex items-center gap-2 mt-1.5">
+                                        <p class="text-[9px] text-textMuted uppercase bg-white/5 px-1.5 py-0.5 rounded border border-white/5">Day ${tx.day}</p>
+                                        <button onclick="togglePayer(${tx.originalIndex})" class="flex items-center gap-1 text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${tx.paidBy === 'Joe' ? 'bg-joe/20 text-joe' : 'bg-sonia/20 text-sonia'} transition-colors">
+                                            <i data-lucide="refresh-cw" class="w-2.5 h-2.5"></i> ${tx.paidBy}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-1">
+                                    <span class="text-textMuted text-xs font-medium">$</span>
+                                    <input type="number" class="budget-input text-xs" value="${tx.amount}" onchange="updateAmount(${tx.originalIndex}, this.value)">
+                                </div>
+                                <button onclick="deleteBudgetItem(${tx.originalIndex})" class="p-1.5 bg-red-500/10 text-red-400 rounded-md opacity-70 hover:opacity-100 transition-opacity"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                            </div>
+                        </div>`; 
+                });
+                html += `</div></div></div>`;
+            });
+            container.innerHTML = html; 
+            lucide.createIcons(); 
+            // Don't call updateBudgetTotals here to prevent infinite loop.
+            // It is called in init.
+        };
+
+        // --- MODAL FUNCTIONS ---
+        const openBudgetModal = () => {
+            haptic('light');
+            const modal = document.getElementById('add-budget-modal');
+            modal.classList.remove('hidden');
+            
+            // Allow the display to update before triggering the fade-in animation
+            setTimeout(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                document.getElementById('add-budget-content').classList.remove('scale-95');
+            }, 10);
+        };
+
+        const closeBudgetModal = () => {
+            const modal = document.getElementById('add-budget-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('add-budget-content').classList.add('scale-95');
+            
+            // Wait for the fade-out animation to finish before hiding completely
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Reset fields
+                document.getElementById('new-budget-name').value = '';
+                document.getElementById('new-budget-amount').value = '';
+                selectModalPayer('Joe');
+            }, 300);
+        };
+
+        const selectModalPayer = (payer) => {
+            currentModalPayer = payer;
+            const btnJoe = document.getElementById('payer-joe');
+            const btnSonia = document.getElementById('payer-sonia');
+            if (payer === 'Joe') {
+                btnJoe.className = "flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-lg bg-joe text-white shadow-md transition-all";
+                btnSonia.className = "flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-lg text-textMuted hover:text-white transition-all";
+            } else {
+                btnJoe.className = "flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-lg text-textMuted hover:text-white transition-all";
+                btnSonia.className = "flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-lg bg-sonia text-white shadow-md transition-all";
+            }
+        };
+
+        const saveNewBudgetItem = () => {
+            const name = document.getElementById('new-budget-name').value.trim() || 'Custom Expense';
+            const amount = parseFloat(document.getElementById('new-budget-amount').value) || 0;
+            const category = document.getElementById('new-budget-category').value;
+            const day = currentDayIndex + 1; // Default to current selected day in itinerary
+            
+            budgetLedger.push({ day: `${day}`, item: name, amount: amount, paidBy: currentModalPayer, category: category });
+            
+            // Auto expand the category where it was added
+            expandedCategories.add(category);
+            
+            saveBudgetState();
+            updateBudgetTotals(); // Update totals first
+            renderBudget();       // Then render with new percentages
+            closeBudgetModal();
+            haptic('success');
+        };
+
+        const renderHotels = () => {
+            document.getElementById('hotels-list').innerHTML = hotelsData.map(h => `
+                <div class="relative w-full h-[240px] rounded-[2rem] overflow-hidden shadow-2xl border border-white/10 bg-[#121212]">
+                    <img src="${h.img}" onerror="this.src='${defaultFallback}'" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10"></div>
+                    <div class="absolute top-4 left-4 right-4 flex justify-between"><span class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-bold text-white uppercase border border-white/10 shadow-sm">${h.nights} Nights</span><span class="bg-accent/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-black border border-accent shadow-xl">${h.price} Total</span></div>
+                    <div class="absolute bottom-4 left-4 right-4"><p class="text-[9px] text-accent font-bold uppercase mb-1 drop-shadow-md">${h.dates} • ${h.location}</p><h2 class="text-xl font-bold text-white mb-1 drop-shadow-md">${h.name}</h2><p class="text-[10px] text-white/90 line-clamp-2 leading-relaxed drop-shadow-md">${h.desc}</p></div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        };
+
+        const initMap = () => {
+            mapInstance = L.map('leaflet-map', { zoomControl: false }).setView([41.0082, 28.9784], 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; CartoDB', maxZoom: 19 }).addTo(mapInstance);
+            markersLayer = L.layerGroup().addTo(mapInstance); polylineLayer = L.layerGroup().addTo(mapInstance);
+        };
+
+        const updateMap = (idx) => {
+            if (!mapInstance) return; markersLayer.clearLayers(); polylineLayer.clearLayers();
+            
+            if (showAllDaysMap) {
+                document.getElementById('map-day-label').innerText = `ALL DAYS`;
+                const allLls = [];
+                // Distinct colors to show the progression between days
+                const dayColors = ['#D4AF37', '#ec4899', '#3b82f6', '#10b981', '#a855f7', '#f97316', '#06b6d4', '#f43f5e', '#14b8a6', '#8b5cf6'];
+                
+                itinerary.forEach((d, dayIdx) => {
+                    const dayLls = [];
+                    const color = dayColors[dayIdx % dayColors.length];
+                    d.stops.forEach((s, si) => {
+                        if(s.lat && s.lng) {
+                            dayLls.push([s.lat, s.lng]);
+                            allLls.push([s.lat, s.lng]);
+                            const mk = L.marker([s.lat, s.lng], { 
+                                icon: L.divIcon({ 
+                                    className: (s.completed ? 'custom-marker completed-marker' : 'custom-marker'), 
+                                    html: `${d.day}.${si + 1}`, // Shows Day.Stop format
+                                    iconSize: [22, 22], 
+                                    iconAnchor: [11, 11] 
+                                }) 
+                            }).bindPopup(`<b>Day ${d.day}: ${s.location}</b>`).addTo(markersLayer);
+                            mk.setZIndexOffset((s.completed ? 100 : 1000) - si);
+                        }
+                    });
+                    if (dayLls.length > 1) { 
+                        L.polyline(dayLls, {color: color, weight: 2, opacity: 0.8, dashArray: '4, 4'}).addTo(polylineLayer); 
+                    }
+                });
+                
+                if (allLls.length > 0) {
+                    const bounds = L.polyline(allLls).getBounds();
+                    mapInstance.flyToBounds(bounds, { padding: [50, 50], duration: 1.2 }); 
+                }
+            } else {
+                const d = itinerary[idx]; document.getElementById('map-day-label').innerText = `Day ${d.day}`;
+                const lls = [];
+                d.stops.forEach((s, si) => {
+                    if(s.lat && s.lng) {
+                        lls.push([s.lat, s.lng]);
+                        const mk = L.marker([s.lat, s.lng], { icon: L.divIcon({ className: (s.completed ? 'custom-marker completed-marker' : 'custom-marker'), html: `${si + 1}`, iconSize: [22, 22], iconAnchor: [11, 11] }) }).bindPopup(`<b>${si+1}. ${s.location}</b>`).addTo(markersLayer);
+                        mk.setZIndexOffset((s.completed ? 100 : 1000) - si);
+                    }
+                });
+                if (lls.length > 1) { 
+                    const pl = L.polyline(lls, {color: '#D4AF37', weight: 2.5, opacity: 0.8, dashArray: '6, 6'}).addTo(polylineLayer); 
+                    // UPGRADE 4: Smooth map flying transitions instead of snappy fitBounds
+                    mapInstance.flyToBounds(pl.getBounds(), { padding: [50, 50], duration: 1.2 }); 
+                }
+                else if (lls.length === 1) mapInstance.flyTo(lls[0], 14, {duration: 1.2});
+            }
+            
+            lucide.createIcons();
+        };
+
+        const toggleComplete = (si, btn) => {
+            haptic('light'); const s = itinerary[currentDayIndex].stops[si]; s.completed = !s.completed;
+            if (s.completed) {
+                btn.classList.add('completed'); btn.innerHTML = `<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Visited`;
+                if (si < itinerary[currentDayIndex].stops.length - 1) setTimeout(() => document.getElementById('deck-container').scrollBy({ left: window.innerWidth, behavior: 'smooth' }), 400);
+                else haptic('success');
+            } else { btn.classList.remove('completed'); btn.innerHTML = `<i data-lucide="circle" class="w-3.5 h-3.5"></i> Mark Complete`; }
+            saveProgressState(); lucide.createIcons(); updateProgressUI(); if (mapInstance) updateMap(currentDayIndex);
+        };
+
+        const updateProgressUI = () => {
+            const d = itinerary[currentDayIndex];
+            const pct = Math.round((d.stops.filter(s => s.completed).length / d.stops.length) * 100) || 0; 
+            document.getElementById('day-progress-bar').style.width = `${pct}%`;
+        };
+
+        const buildDaySelector = () => {
+            document.getElementById('day-selector').innerHTML = itinerary.map((d, i) => `
+                <button onclick="selectDay(${i})" class="day-btn flex-shrink-0 px-5 py-2 rounded-xl border border-white/5 bg-card text-textMuted flex justify-center items-center text-xs font-bold shadow-sm ${i === currentDayIndex ? 'active' : ''}" id="day-btn-${i}">D${d.day}</button>
+            `).join('');
+            const active = document.getElementById(`day-btn-${currentDayIndex}`); if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            document.getElementById('current-zone-label').innerHTML = `${itinerary[currentDayIndex].zone} <span class="text-textMuted lowercase font-normal ml-1 border border-white/10 bg-white/5 px-1.5 rounded">(${itinerary[currentDayIndex].stops.length} stops)</span>`;
+            updateProgressUI();
+        };
+
+        const selectDay = (i) => { 
+            haptic('light'); 
+            currentDayIndex = i; 
+            
+            // Auto-disable All Days mode when selecting a specific day
+            showAllDaysMap = false;
+            const btn = document.getElementById('btn-all-days');
+            if(btn) {
+                btn.classList.remove('bg-accent/20', 'text-accent', 'border-accent/50');
+                btn.classList.add('bg-black/80', 'text-white', 'border-white/10');
+            }
+            
+            buildDaySelector(); renderCards(); updateProgressUI(); if (mapInstance) updateMap(i); 
+        };
+
+        const renderCards = () => {
+            document.getElementById('deck-container').innerHTML = itinerary[currentDayIndex].stops.map((s, i) => `
+                <div class="card-wrapper"><div class="card-inner">
+                    <div class="absolute inset-0 z-0 bg-black"><img src="${s.img}" loading="lazy" onerror="this.src='${defaultFallback}'" class="w-full h-full object-cover transition-all duration-700 ${s.completed ? "opacity-60 grayscale-[40%]" : "opacity-90"}" alt="${s.location}"><div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/95 to-black/20"></div></div>
+                    <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white z-20 border border-white/10 font-mono shadow-md">${i + 1} / ${itinerary[currentDayIndex].stops.length}</div>
+                    ${s.completed ? '<div class="absolute top-4 left-4 bg-success/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-success/50 flex items-center gap-1 z-20 shadow-lg"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-white"></i><span class="text-[10px] uppercase font-bold text-white tracking-widest">Visited</span></div>' : (s.isMichelin ? '<div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-accent/50 flex items-center gap-1 z-20 shadow-md"><i data-lucide="star" class="w-3.5 h-3.5 text-accent fill-accent"></i><span class="text-[10px] uppercase font-bold text-accent tracking-widest">Michelin</span></div>' : '')}
+                    <div class="relative z-10 w-full">
+                        <div class="flex gap-1.5 mb-3 overflow-x-auto no-scrollbar">
+                            <div class="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/5 whitespace-nowrap shadow-sm"><i data-lucide="clock" class="w-3 h-3 text-accent"></i><span class="text-[10px] font-mono font-semibold text-white/90">${s.start}-${s.end}</span></div>
+                            <div class="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/5 whitespace-nowrap shadow-sm"><i data-lucide="activity" class="w-3 h-3 text-accent"></i><span class="text-[9px] font-bold text-white/90 uppercase tracking-widest">${s.activity}</span></div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white mb-1.5 leading-tight tracking-tight">${s.location}</h2><p class="text-[11px] text-white/70 leading-relaxed mb-4 line-clamp-2">${s.desc}</p>
+                        <div class="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-3.5 flex flex-col gap-3 mt-auto shadow-xl">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-white/10 p-2 rounded-full border border-white/5"><i data-lucide="navigation" class="w-3.5 h-3.5 text-white"></i></div>
+                                    <div><p class="text-[8px] text-textMuted uppercase font-bold tracking-widest">Next Move</p><p class="text-[10px] font-bold text-white mt-0.5">${s.travelMethod} • ${s.travelDist}</p></div>
+                                </div>
+                                <div class="text-right border-l border-white/10 pl-3">
+                                    <p class="text-[8px] text-textMuted uppercase font-bold tracking-widest">Duration</p><p class="text-[10px] font-bold text-accent mt-0.5">${s.duration}</p>
+                                </div>
+                            </div>
+                            <button onclick="toggleComplete(${i}, this)" class="${s.completed ? "bg-success/20 border-success text-success" : "bg-white/10 border-white/20 text-white hover:bg-white/20"} w-full py-2.5 rounded-xl border backdrop-blur-md flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest focus:outline-none transition-all shadow-sm"><i data-lucide="${s.completed ? "check-circle" : "circle"}" class="w-3.5 h-3.5"></i> ${s.completed ? "Visited" : "Mark Complete"}</button>
+                        </div>
+                    </div>
+                </div></div>
+            `).join('');
+            document.getElementById('deck-container').scrollLeft = 0; lucide.createIcons();
+        };
+
+        const renderWeather = () => {
+            document.getElementById('weather-deck-container').innerHTML = itinerary.map((d, i) => {
+                const w = weatherData[d.day];
+                return `<div class="card-wrapper"><div class="card-inner p-0 overflow-hidden border border-white/10 shadow-2xl relative">
+                    <div class="absolute inset-0 z-0">
+                        <img src="${d.stops[0].img}" onerror="this.src='${defaultFallback}'" class="w-full h-full object-cover" />
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-[#050505]/95"></div>
+                    </div>
+                    <div class="relative z-10 h-full flex flex-col p-5 pt-6">
+                        <div class="flex justify-between items-start mb-auto">
+                            <div>
+                                <p class="text-[10px] text-accent font-bold uppercase tracking-widest mb-1 drop-shadow-md">Day ${d.day} • ${d.city}</p>
+                                <h2 class="text-3xl font-bold text-white tracking-tight drop-shadow-lg">${w.condition}</h2>
+                            </div>
+                            <div class="bg-black/40 backdrop-blur-md p-2.5 rounded-full border border-white/10 shadow-sm flex items-center justify-center">
+                                <i data-lucide="${w.iconDay}" class="w-5 h-5 text-accent"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 mt-8">
+                            <div class="flex items-center justify-between bg-black/40 backdrop-blur-2xl p-4 rounded-3xl border border-white/10 shadow-xl">
+                                <div class="flex-1 flex flex-col items-center">
+                                    <p class="text-[9px] text-textMuted uppercase font-bold tracking-widest mb-1">High</p>
+                                    <p class="text-4xl font-bold text-white tracking-tight">${w.tempDay}</p>
+                                </div>
+                                <div class="w-px h-12 bg-white/10"></div>
+                                <div class="flex-1 flex flex-col items-center">
+                                    <p class="text-[9px] text-textMuted uppercase font-bold tracking-widest mb-1">Low</p>
+                                    <p class="text-4xl font-bold text-blue-300 tracking-tight">${w.tempNight}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-3">
+                                <div class="flex-1 bg-black/50 backdrop-blur-xl p-4 rounded-[1.25rem] border border-white/10 shadow-lg flex flex-col">
+                                    <i data-lucide="info" class="w-4 h-4 text-white/50 mb-2"></i>
+                                    <p class="text-[11px] text-white/90 leading-relaxed font-medium">${w.desc}</p>
+                                </div>
+                                <div class="flex-1 bg-accent/10 backdrop-blur-xl p-4 rounded-[1.25rem] border border-accent/20 shadow-lg flex flex-col">
+                                    <i data-lucide="shirt" class="w-4 h-4 text-accent mb-2"></i>
+                                    <p class="text-[11px] text-white font-semibold leading-relaxed">${w.wear}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div></div>`;
+            }).join(''); lucide.createIcons();
+        };
+
+        // --- DASHBOARD FUNCTIONS ---
+        const startDashboardClocks = () => {
+            const kulEl = document.getElementById('clock-kul');
+            const istEl = document.getElementById('clock-ist');
+            const cdEl = document.getElementById('countdown-timer');
+            
+            // Trip Start Date: Sep 14, 2026
+            const targetDate = new Date('2026-09-14T00:00:00Z').getTime();
+
+            setInterval(() => {
+                const now = new Date();
+                
+                // Clocks
+                kulEl.innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kuala_Lumpur', hour12: false, hour: '2-digit', minute: '2-digit' });
+                istEl.innerText = now.toLocaleTimeString('en-US', { timeZone: 'Europe/Istanbul', hour12: false, hour: '2-digit', minute: '2-digit' });
+
+                // Countdown
+                const distance = targetDate - now.getTime();
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    cdEl.innerText = `${days}d ${hours}h ${minutes}m`;
+                } else {
+                    cdEl.innerText = "IN PROGRESS";
+                    cdEl.classList.add('text-success');
+                }
+            }, 1000);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState(); 
+            updateBudgetTotals(); // Initial calculation
+            renderBudget(); 
+            fetchExchangeRate(); 
+            buildDaySelector(); 
+            renderCards();
+            startDashboardClocks();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
+
